@@ -2,6 +2,8 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import { BsCurrencyDollar, BsCartPlus } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 
+import { useProductContext } from "../hooks/useProductContext";
+
 export interface State {
 	id: string;
 	title?: string;
@@ -13,11 +15,22 @@ export interface State {
 
 type Props = {
 	products: State[];
-	handleLocalCart: (product: State) => void;
 };
 
-const ProductList = ({ products, handleLocalCart }: Props) => {
+const ProductList = ({ products }: Props) => {
 	const navigate = useNavigate();
+
+	const { localCart, setLocalCart } = useProductContext();
+
+	const handleLocalCart = (product: State) => {
+		if (localCart!.some((p) => p.id === product.id)) {
+			console.log("return");
+			return;
+		}
+		setLocalCart!((prev) => [...prev, product]);
+		// const json = JSON.stringify(localCart);
+		// localStorage.setItem("localCart", json);
+	};
 
 	return (
 		<div>

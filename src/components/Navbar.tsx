@@ -2,9 +2,12 @@ import { Nav, Navbar, Badge, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BsCart4 } from "react-icons/bs";
 import { useState } from "react";
+import { useProductContext } from "../hooks/useProductContext";
 
 const NavbarBS = () => {
 	const [expanded, setExpanded] = useState(false);
+
+	const { localCart } = useProductContext();
 
 	return (
 		<Navbar
@@ -74,7 +77,8 @@ const NavbarBS = () => {
 							bg="danger"
 							className="position-absolute top-0 start-100 translate-middle rounded-pill bg-danger"
 						>
-							9<span className="visually-hidden">shopping cart items</span>
+							{localCart && localCart.length}
+							<span className="visually-hidden">shopping cart items</span>
 						</Badge>
 					</div>
 				</Nav.Link>

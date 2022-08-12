@@ -1,5 +1,7 @@
+import ProductList from "../components/ProductList";
+
 const Men = () => {
-	return <div>Men</div>;
+	return <div>{/* <ProductList /> */}</div>;
 };
 
 export default Men;
