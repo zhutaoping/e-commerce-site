@@ -21,13 +21,14 @@ const ProductList = ({ products, handleLocalCart }: Props) => {
 
 	return (
 		<div>
-			<Container>
+			<Container className="mb-5">
 				<Row>
 					{products.map((product) => (
-						<Col key={product.id} xs={12} md={6} lg={4} xl={3}>
+						<Col key={product.id} md={6} lg={4} xl={3}>
 							<Card className="py-4 mb-4">
 								<Card.Body>
 									<img
+										title="Details"
 										src={product.image}
 										className="img-fluid pointer"
 										role="button"
@@ -38,7 +39,7 @@ const ProductList = ({ products, handleLocalCart }: Props) => {
 									<Card.Link
 										className="small d-flex justify-content-end mb-5"
 										as={Link}
-										to="/details"
+										to="/details/:id"
 									>
 										Details
 									</Card.Link>

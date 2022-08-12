@@ -1,7 +1,24 @@
-@forward "scss";
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
 
 .navbar-shadow {
 	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+a {
+	text-decoration: none;
 }
 
 .error {
@@ -13,4 +30,14 @@
 	margin: 10px 0;
 }
 
+.nav-login {
+	margin-right: 1rem;
 
+	& span {
+		color: rgb(0 0 0 / 55%);
+	}
+
+	& span:hover {
+		color: rgb(0 0 0 / 70%);
+	}
+}
