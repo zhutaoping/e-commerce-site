@@ -77,7 +77,7 @@ const NavbarBS = () => {
 							bg="danger"
 							className="position-absolute top-0 start-100 translate-middle rounded-pill bg-danger"
 						>
-							{localCart && localCart.length}
+							{localCart ? localCart.length : 0}
 							<span className="visually-hidden">shopping cart items</span>
 						</Badge>
 					</div>

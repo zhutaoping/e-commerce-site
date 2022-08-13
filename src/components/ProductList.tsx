@@ -20,14 +20,15 @@ type Props = {
 const ProductList = ({ products }: Props) => {
 	const navigate = useNavigate();
 
-	const { localCart, setLocalCart } = useProductContext();
+	const { localCart, dispatch } = useProductContext();
 
 	const handleLocalCart = (product: State) => {
-		if (localCart!.some((p) => p.id === product.id)) {
+		console.log(product.id);
+		if (localCart && localCart.some((p) => p.id === product.id)) {
 			console.log("return");
 			return;
 		}
-		setLocalCart!((prev) => [...prev, product]);
+		dispatch!({ type: "ADD", payload: product });
 		// const json = JSON.stringify(localCart);
 		// localStorage.setItem("localCart", json);
 	};
