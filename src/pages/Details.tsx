@@ -1,13 +1,28 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { State } from "../components/ProductList";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { BsCartPlus } from "react-icons/bs";
 
 const Details = () => {
+	const [quasiCount, setQuasiCount] = useState(0);
+
 	const location = useLocation();
 	const state = location.state as State;
+
+	const handleDecrease = () => {
+		if (quasiCount === 0) return;
+		setQuasiCount((prev) => prev - 1);
+	};
+
+	const handleIncrease = () => {
+		setQuasiCount((prev) => prev + 1);
+	};
+
+	useEffect(() => {
+		console.log(quasiCount);
+	}, [quasiCount]);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -34,16 +49,21 @@ const Details = () => {
 						</p>
 
 						<h1 className="fw-bold mb-4 mb-xl-5">${state.price}</h1>
+
 						<div className="d-md-flex gap-5">
 							<Container className="d-flex align-items-center justify-content-between">
 								<h1
 									role="button"
 									className="click-down-button text-warning fw-bold mb-0"
+									onClick={handleDecrease}
 								>
 									&minus;
 								</h1>
-								<h4 className="mb-0 ">{state.count}</h4>
-								<h1 className="click-down-button text-warning fw-bold mb-0 ">
+								<h4 className="mb-0 user-select-none">{quasiCount}</h4>
+								<h1
+									className="click-down-button text-warning fw-bold mb-0"
+									onClick={handleIncrease}
+								>
 									&#43;
 								</h1>
 							</Container>

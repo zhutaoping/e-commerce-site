@@ -7,15 +7,22 @@ import React, {
 } from "react";
 import { State } from "../components/ProductList";
 
+import { db } from "../firebase/config";
+import { doc, updateDoc } from "firebase/firestore";
+
 type Props = {
 	children: React.ReactNode;
 };
 
+// interface ExtendedState extends State {
+// 	addedCount?: number;
+// }
+
 type CartAction =
 	| { type: "INIT"; payload: State[] }
 	| { type: "ADD"; payload: State }
-	| { type: "INCREASE"; payload: string }
-	| { type: "DECREASE"; payload: string }
+	| { type: "INCREASE"; payload: State }
+	| { type: "DECREASE"; payload: number }
 	| { type: "REMOVE"; payload: string };
 
 const localCartReducer = (localCart: State[], action: CartAction) => {
@@ -26,12 +33,30 @@ const localCartReducer = (localCart: State[], action: CartAction) => {
 		case "ADD":
 			return [...localCart, payload];
 		case "INCREASE":
-			return localCart;
+			// console.log("test increase");
+			let loCount: number = 0;
+			localCart.map((lo) => {
+				if (lo.id === payload.id) {
+					loCount = lo.count! + payload.addedCount!;
+					return (lo.count = loCount);
+				}
+				return loCount;
+			});
+			updateDocument(payload.id, loCount);
+			return [...localCart];
 		case "DECREASE":
 			return localCart;
 		default:
 			return localCart;
 	}
+};
+
+const updateDocument = async (id: string, ct: number) => {
+	console.log("update");
+	const productRef = doc(db, "products", "id");
+	await updateDoc(productRef, {
+		count: ct,
+	});
 };
 
 type Context = {
@@ -53,8 +78,8 @@ export const ProductContextProvider = ({ children }: Props) => {
 	useEffect(() => {
 		const currLocalCart = localStorage.getItem("localCart");
 		if (currLocalCart) {
-			const obj: State[] = JSON.parse(currLocalCart!);
-			dispatch({ type: "INIT", payload: obj });
+			const arr: State[] = JSON.parse(currLocalCart!);
+			dispatch({ type: "INIT", payload: arr });
 		} else return;
 	}, []);
 
@@ -65,6 +90,7 @@ export const ProductContextProvider = ({ children }: Props) => {
 		}
 		const json = JSON.stringify(localCart);
 		localStorage.setItem("localCart", json);
+		console.log(localCart);
 	}, [localCart]);
 
 	const value = { localCart, dispatch };

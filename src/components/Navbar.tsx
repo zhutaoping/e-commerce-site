@@ -8,6 +8,9 @@ const NavbarBS = () => {
 	const [expanded, setExpanded] = useState(false);
 
 	const { localCart } = useProductContext();
+	const totalCount = localCart.reduce((prev, curr) => prev + curr.count!, 0);
+
+	// localCart.map((lo) => console.log(count));
 
 	return (
 		<Navbar
@@ -77,7 +80,7 @@ const NavbarBS = () => {
 							bg="danger"
 							className="position-absolute top-0 start-100 translate-middle rounded-pill bg-danger"
 						>
-							{localCart ? localCart.length : 0}
+							{localCart ? totalCount : 0}
 							<span className="visually-hidden">shopping cart items</span>
 						</Badge>
 					</div>

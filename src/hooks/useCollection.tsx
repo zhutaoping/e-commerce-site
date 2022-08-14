@@ -8,7 +8,7 @@ import {
 import { State } from "../components/ProductList";
 
 export const useCollection = (c: string) => {
-	const [documents, setDocuments] = useState<State[]>([]);
+	const [documents, setDocuments] = useState<State[]>();
 	const [error, setError] = useState<ReactNode>();
 
 	useEffect(() => {
@@ -28,7 +28,6 @@ export const useCollection = (c: string) => {
 				setError("無法取得資料");
 			}
 		);
-
 
 		return () => unsub();
 	}, [c]);

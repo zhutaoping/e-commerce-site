@@ -13,6 +13,7 @@ export interface State {
 	category?: string;
 	image?: string;
 	count?: number;
+	addedCount?: number;
 }
 
 type Props = {
@@ -26,14 +27,15 @@ const ProductList = ({ products }: Props) => {
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
+		console.log(products);
 	}, []);
 
 	const handleLocalCart = (product: State) => {
-		console.log(product);
 		if (localCart && localCart.some((p) => p.id === product.id)) {
-			return;
+			dispatch({ type: "INCREASE", payload: { ...product, addedCount: 1 } });
+		} else {
+			dispatch({ type: "ADD", payload: { ...product, count: 1 } });
 		}
-		dispatch!({ type: "ADD", payload: { ...product, count: 1 } });
 	};
 
 	return (
