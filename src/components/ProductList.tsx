@@ -1,6 +1,7 @@
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { BsCurrencyDollar, BsCartPlus } from "react-icons/bs";
+import { BsCartPlus } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 import { useProductContext } from "../hooks/useProductContext";
 
@@ -11,6 +12,7 @@ export interface State {
 	description?: string;
 	category?: string;
 	image?: string;
+	count?: number;
 }
 
 type Props = {
@@ -22,15 +24,16 @@ const ProductList = ({ products }: Props) => {
 
 	const { localCart, dispatch } = useProductContext();
 
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	const handleLocalCart = (product: State) => {
-		console.log(product.id);
+		console.log(product);
 		if (localCart && localCart.some((p) => p.id === product.id)) {
-			console.log("return");
 			return;
 		}
-		dispatch!({ type: "ADD", payload: product });
-		// const json = JSON.stringify(localCart);
-		// localStorage.setItem("localCart", json);
+		dispatch!({ type: "ADD", payload: { ...product, count: 1 } });
 	};
 
 	return (
@@ -47,26 +50,28 @@ const ProductList = ({ products }: Props) => {
 										className="img-fluid pointer"
 										role="button"
 										alt="product item"
-										onClick={() => navigate("/details/:id")}
+										onClick={() =>
+											navigate(`/details/${product.id}`, {
+												state: product,
+											})
+										}
 									/>
 									<Card.Title className="mt-4">{product.title}</Card.Title>
 									<Card.Link
 										className="small d-flex justify-content-end mb-5"
 										as={Link}
-										to="/details/:id"
+										to={`/details/${product.id}`}
+										state={product}
 									>
 										Details
 									</Card.Link>
 
-									<Card.Text className="d-flex justify-content-between align-items-center h4 fw-bold">
-										<span className="d-flex align-items-center">
-											<BsCurrencyDollar />
-											<span className="fs-5">{product.price}</span>
-										</span>
+									<Card.Text className="d-flex justify-content-between align-items-baseline h3 fw-bold">
+										<span className="fs-4 ">${product.price}</span>
 
 										<BsCartPlus
 											role="button"
-											className="pe-auto"
+											className="click-down-button pe-auto"
 											onClick={() => handleLocalCart(product)}
 										/>
 									</Card.Text>

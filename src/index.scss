@@ -41,3 +41,11 @@ a {
 		color: rgb(0 0 0 / 70%);
 	}
 }
+
+.click-down-button {
+	user-select: none;
+
+	&:active {
+		transform: translateY(1px);
+	}
+}

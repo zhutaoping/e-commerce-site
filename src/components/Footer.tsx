@@ -20,9 +20,9 @@ const Footer = () => {
 		<div className="bg-dark py-5 text-light">
 			<Container fluid="xxl">
 				<Row className="gy-5 justify-">
-					<Col md={6} lg={4}>
+					<Col md={6} lg={4} className="ps-md-5">
 						<h2 className="text-center text-md-start">Mock</h2>
-						<p className="text-center text-md-start">
+						<p className="text-center text-md-start w-md-50">
 							Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat
 							vitae quidem qui sint odit iure quia corporis distinctio
 						</p>
@@ -43,7 +43,7 @@ const Footer = () => {
 					</Col>
 
 					<Col
-						className="d-flex flex-column align-items-center gap-2"
+						className="d-flex flex-column align-items-center lh-lg"
 						md={6}
 						lg={4}
 					>
@@ -74,7 +74,7 @@ const Footer = () => {
 					<Col
 						md={6}
 						lg={4}
-						className="footer-contact ps-lg-5 d-flex flex-column align-items-center align-items-md-start"
+						className="footer-contact d-flex flex-column align-items-center align-items-md-start gap-2 ps-md-5"
 					>
 						<h4 className="mb-3">Contact</h4>
 						<span className="d-flex gap-2 mb-2">

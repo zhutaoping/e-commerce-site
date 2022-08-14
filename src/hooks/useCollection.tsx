@@ -17,10 +17,10 @@ export const useCollection = (c: string) => {
 		const unsub = onSnapshot(
 			ref,
 			(snapshot) => {
-				let results: State[] = [];
-				snapshot.docs.forEach((doc) => {
-					results.push({ id: doc.id, ...doc.data() });
-				});
+				const results = snapshot.docs.map((doc) => ({
+					id: doc.id,
+					...doc.data(),
+				}));
 				setDocuments(results);
 				setError(null);
 			},
@@ -28,6 +28,7 @@ export const useCollection = (c: string) => {
 				setError("無法取得資料");
 			}
 		);
+
 
 		return () => unsub();
 	}, [c]);

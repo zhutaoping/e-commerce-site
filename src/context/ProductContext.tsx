@@ -1,4 +1,3 @@
-import { useCollection } from "../hooks/useCollection";
 import React, {
 	createContext,
 	useState,
@@ -10,13 +9,6 @@ import { State } from "../components/ProductList";
 
 type Props = {
 	children: React.ReactNode;
-};
-
-type Context = {
-	// cartItems?: State[];
-	// setLocalCart?: React.Dispatch<React.SetStateAction<State[]>>;
-	localCart?: State[];
-	dispatch?: React.Dispatch<CartAction>;
 };
 
 type CartAction =
@@ -42,7 +34,15 @@ const localCartReducer = (localCart: State[], action: CartAction) => {
 	}
 };
 
-export const ProductContext = createContext<Context>({});
+type Context = {
+	localCart: State[];
+	dispatch: React.Dispatch<CartAction>;
+};
+
+export const ProductContext = createContext<Context>({
+	localCart: [],
+	dispatch: () => null,
+});
 
 export const ProductContextProvider = ({ children }: Props) => {
 	const [cartItems, setCartItems] = useState<State[]>([]);

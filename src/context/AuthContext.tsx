@@ -8,7 +8,11 @@ interface State {
 	dispatch?: React.Dispatch<Action>;
 }
 
-export const AuthContext = createContext<State | null>(null);
+export const AuthContext = createContext<State>({
+	user: {},
+	authIsReady: false,
+	dispatch: () => null,
+});
 
 type Action =
 	| { type: "LOGIN"; payload: {} | null }

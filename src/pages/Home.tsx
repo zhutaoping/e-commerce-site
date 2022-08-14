@@ -8,6 +8,7 @@ const Home = () => {
 	const { documents, error } = useCollection("products");
 
 	return (
+		
 		<div>
 			<h5 className="p-4 text-center">Collections</h5>
 			{error && <p className="error">{error}</p>}
