@@ -49,3 +49,17 @@ a {
 		transform: translateY(1px);
 	}
 }
+
+.dashed-border {
+	border-bottom: 1px dashed;
+}
+
+.my-wrapper {
+	@media (min-width: 768px) {
+		max-width: 50%;
+	}
+
+	@media (min-width: 992px) {
+		max-width: 100%;
+	}
+}

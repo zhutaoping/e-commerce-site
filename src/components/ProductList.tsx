@@ -47,10 +47,10 @@ const ProductList = ({ products }: Props) => {
 							<Card className="py-4 mb-4">
 								<Card.Body>
 									<img
+										role="button"
 										title="Details"
 										src={product.image}
 										className="img-fluid pointer"
-										role="button"
 										alt="product item"
 										onClick={() =>
 											navigate(`/details/${product.id}`, {

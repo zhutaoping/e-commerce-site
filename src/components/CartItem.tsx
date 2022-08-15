@@ -1,8 +1,9 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { State } from "./ProductList";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { FaHeart, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 
 import { useProductContext } from "../hooks/useProductContext";
 
@@ -11,9 +12,9 @@ type Props = {
 };
 
 const CartItem = ({ items }: Props) => {
-	const [quasiCount, setQuasiCount] = useState(0);
-
 	const { dispatch } = useProductContext();
+
+	const navigate = useNavigate();
 
 	const handleIncrease = (item: State) => {
 		dispatch({
@@ -22,9 +23,13 @@ const CartItem = ({ items }: Props) => {
 		});
 	};
 
-	const handleDecrease = () => {
-		if (quasiCount === 0) return;
-		setQuasiCount((prev) => prev - 1);
+	const handleDecrease = (item: State) => {
+		if (item.count === 0) return;
+
+		dispatch({
+			type: "DECREASE",
+			payload: { ...item, addedCount: 1 },
+		});
 	};
 
 	const handleDelete = (id: string) => {
@@ -44,11 +49,23 @@ const CartItem = ({ items }: Props) => {
 				<Container key={item.id}>
 					<Row className=" border-bottom mb-5">
 						<Col className="mb-4" xs={4}>
-							<img className="img-fluid" src={item.image} alt="cart item" />
+							<img
+								role="button"
+								title="Details"
+								className="img-fluid"
+								src={item.image}
+								alt="cart item"
+								onClick={() =>
+									navigate(`/details/${item.id}`, {
+										state: item,
+									})
+								}
+							/>
 						</Col>
+
 						<Col xs={8} className="d-flex flex-column justify-content-around">
-							<Container className="pe-0  d-flex justify-content-between align-items-center">
-								<h6 className="mb-0">
+							<Container className="pe-0  d-flex justify-content-between align-items-baseline">
+								<h6 className="mb-0 me-3">
 									{item.shortTitle ? item.shortTitle : item.title}
 								</h6>
 								<span className="fs-5 ">${item.price}</span>
@@ -56,8 +73,8 @@ const CartItem = ({ items }: Props) => {
 							<Container className="d-flex align-items-baseline justify-content-between">
 								<h1
 									role="button"
-									className="click-down-button text-warning fw-bold mb-0"
-									onClick={handleDecrease}
+									className="click-down-button text-warning fw-bold mb-0 ps-md-4"
+									onClick={() => handleDecrease(item)}
 								>
 									&minus;
 								</h1>
@@ -68,19 +85,19 @@ const CartItem = ({ items }: Props) => {
 								>
 									&#43;
 								</h1>
-								<div className="d-flex gap-4">
-									<div className="click-down-button d-flex align-items-center">
+								{/* <div className="d-flex gap-4"> */}
+								{/* <div className="click-down-button d-flex align-items-center">
 										<FaHeart size={20} color="gray" />
 										<span className="ms-2">Save</span>
-									</div>
-									<div
-										className="click-down-button d-flex align-items-center"
-										onClick={() => handleDelete(item.id)}
-									>
-										<FaTrash size={20} color="gray" />
-										<span className="ms-2">Delete</span>
-									</div>
+									</div> */}
+								<div
+									className="click-down-button d-flex align-items-center"
+									onClick={() => handleDelete(item.id)}
+								>
+									<FaTrash size={20} color="gray" />
+									<span className="ms-2">Delete</span>
 								</div>
+								{/* </div> */}
 							</Container>
 						</Col>
 					</Row>

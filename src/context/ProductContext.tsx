@@ -37,24 +37,36 @@ const localCartReducer = (localCart: State[], action: CartAction) => {
 		case "INCREASE":
 			console.log("test increase");
 
-			let loCount: number = 0;
-			const temp1 = localCart.map((lo) => {
+			let loCountIncre: number = 0;
+			const tempIncre = localCart.map((lo) => {
 				if (lo.id === payload.id) {
-					loCount = lo.count! + payload.addedCount!;
-					lo.count = loCount;
+					loCountIncre = lo.count! + payload.addedCount!;
+					lo.count = loCountIncre;
 				}
 				return lo;
 			});
-			console.log(temp1);
-			updateDocument(payload.id, loCount);
-			return [...temp1];
+			console.log(tempIncre);
+			updateDocument(payload.id, loCountIncre);
+			return [...tempIncre];
 		case "DECREASE":
-			return localCart;
+			console.log("test decrease");
+
+			let loCountDecre: number = 0;
+			const tempDecre = localCart.map((lo) => {
+				if (lo.id === payload.id) {
+					loCountDecre = lo.count! - payload.addedCount!;
+					lo.count = loCountDecre;
+				}
+				return lo;
+			});
+			console.log(tempDecre);
+			updateDocument(payload.id, loCountDecre);
+			return [...tempDecre];
 		case "DELETE":
 			console.log("test delete", payload);
 			updateDocument(payload, 0);
-			const temp2 = localCart.filter((lo) => lo.id !== payload);
-			return [...temp2];
+			const tempDelete = localCart.filter((lo) => lo.id !== payload);
+			return [...tempDelete];
 		default:
 			return localCart;
 	}
