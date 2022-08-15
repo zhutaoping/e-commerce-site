@@ -8,6 +8,7 @@ import { useProductContext } from "../hooks/useProductContext";
 export interface State {
 	id: string;
 	title?: string;
+	shortTitle?: string;
 	price?: number;
 	description?: string;
 	category?: string;
@@ -27,7 +28,6 @@ const ProductList = ({ products }: Props) => {
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
-		console.log(products);
 	}, []);
 
 	const handleLocalCart = (product: State) => {

@@ -1,0 +1,93 @@
+import { Container, Row, Col, Button } from "react-bootstrap";
+import { State } from "./ProductList";
+import { useEffect, useState } from "react";
+
+import { FaHeart, FaTrash } from "react-icons/fa";
+
+import { useProductContext } from "../hooks/useProductContext";
+
+type Props = {
+	items: State[];
+};
+
+const CartItem = ({ items }: Props) => {
+	const [quasiCount, setQuasiCount] = useState(0);
+
+	const { dispatch } = useProductContext();
+
+	const handleIncrease = (item: State) => {
+		dispatch({
+			type: "INCREASE",
+			payload: { ...item, addedCount: 1 },
+		});
+	};
+
+	const handleDecrease = () => {
+		if (quasiCount === 0) return;
+		setQuasiCount((prev) => prev - 1);
+	};
+
+	const handleDelete = (id: string) => {
+		dispatch({
+			type: "DELETE",
+			payload: id,
+		});
+	};
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
+	return (
+		<div>
+			{items.map((item) => (
+				<Container key={item.id}>
+					<Row className=" border-bottom mb-5">
+						<Col className="mb-4" xs={4}>
+							<img className="img-fluid" src={item.image} alt="cart item" />
+						</Col>
+						<Col xs={8} className="d-flex flex-column justify-content-around">
+							<Container className="pe-0  d-flex justify-content-between align-items-center">
+								<h6 className="mb-0">
+									{item.shortTitle ? item.shortTitle : item.title}
+								</h6>
+								<span className="fs-5 ">${item.price}</span>
+							</Container>
+							<Container className="d-flex align-items-baseline justify-content-between">
+								<h1
+									role="button"
+									className="click-down-button text-warning fw-bold mb-0"
+									onClick={handleDecrease}
+								>
+									&minus;
+								</h1>
+								<h4 className="mb-0 user-select-none">{item.count}</h4>
+								<h1
+									className="click-down-button text-warning fw-bold mb-0"
+									onClick={() => handleIncrease(item)}
+								>
+									&#43;
+								</h1>
+								<div className="d-flex gap-4">
+									<div className="click-down-button d-flex align-items-center">
+										<FaHeart size={20} color="gray" />
+										<span className="ms-2">Save</span>
+									</div>
+									<div
+										className="click-down-button d-flex align-items-center"
+										onClick={() => handleDelete(item.id)}
+									>
+										<FaTrash size={20} color="gray" />
+										<span className="ms-2">Delete</span>
+									</div>
+								</div>
+							</Container>
+						</Col>
+					</Row>
+				</Container>
+			))}
+		</div>
+	);
+};
+
+export default CartItem;

@@ -2,6 +2,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { State } from "../components/ProductList";
 import { useEffect, useState } from "react";
+import { useProductContext } from "../hooks/useProductContext";
 
 import { BsCartPlus } from "react-icons/bs";
 
@@ -10,6 +11,8 @@ const Details = () => {
 
 	const location = useLocation();
 	const state = location.state as State;
+
+	const { dispatch } = useProductContext();
 
 	const handleDecrease = () => {
 		if (quasiCount === 0) return;
@@ -20,9 +23,13 @@ const Details = () => {
 		setQuasiCount((prev) => prev + 1);
 	};
 
-	useEffect(() => {
+	const handleAddToCart = () => {
 		console.log(quasiCount);
-	}, [quasiCount]);
+		dispatch({
+			type: "INCREASE",
+			payload: { ...state, addedCount: quasiCount },
+		});
+	};
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -71,6 +78,7 @@ const Details = () => {
 								className="click-down-button d-flex justify-content-center align-items-center my-3 w-100 shadow"
 								variant="warning"
 								size="lg"
+								onClick={handleAddToCart}
 							>
 								<BsCartPlus className="me-3" />
 								<span>Add to cart</span>

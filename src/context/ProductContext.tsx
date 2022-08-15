@@ -22,8 +22,8 @@ type CartAction =
 	| { type: "INIT"; payload: State[] }
 	| { type: "ADD"; payload: State }
 	| { type: "INCREASE"; payload: State }
-	| { type: "DECREASE"; payload: number }
-	| { type: "REMOVE"; payload: string };
+	| { type: "DECREASE"; payload: State }
+	| { type: "DELETE"; payload: string };
 
 const localCartReducer = (localCart: State[], action: CartAction) => {
 	const { type, payload } = action;
@@ -31,31 +31,39 @@ const localCartReducer = (localCart: State[], action: CartAction) => {
 		case "INIT":
 			return [...localCart, ...payload];
 		case "ADD":
+			console.log("test add");
+			updateDocument(payload.id, 1);
 			return [...localCart, payload];
 		case "INCREASE":
-			// console.log("test increase");
+			console.log("test increase");
+
 			let loCount: number = 0;
-			localCart.map((lo) => {
+			const temp1 = localCart.map((lo) => {
 				if (lo.id === payload.id) {
 					loCount = lo.count! + payload.addedCount!;
-					return (lo.count = loCount);
+					lo.count = loCount;
 				}
-				return loCount;
+				return lo;
 			});
+			console.log(temp1);
 			updateDocument(payload.id, loCount);
-			return [...localCart];
+			return [...temp1];
 		case "DECREASE":
 			return localCart;
+		case "DELETE":
+			console.log("test delete", payload);
+			updateDocument(payload, 0);
+			const temp2 = localCart.filter((lo) => lo.id !== payload);
+			return [...temp2];
 		default:
 			return localCart;
 	}
 };
 
-const updateDocument = async (id: string, ct: number) => {
-	console.log("update");
-	const productRef = doc(db, "products", "id");
+const updateDocument = async (id: string, loCount: number) => {
+	const productRef = doc(db, "products", id);
 	await updateDoc(productRef, {
-		count: ct,
+		count: loCount,
 	});
 };
 
@@ -90,7 +98,6 @@ export const ProductContextProvider = ({ children }: Props) => {
 		}
 		const json = JSON.stringify(localCart);
 		localStorage.setItem("localCart", json);
-		console.log(localCart);
 	}, [localCart]);
 
 	const value = { localCart, dispatch };
