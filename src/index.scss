@@ -5,6 +5,7 @@
 
 html {
 	box-sizing: border-box;
+	scroll-behavior: smooth;
 }
 
 *,
@@ -39,6 +40,21 @@ a {
 
 	& span:hover {
 		color: rgb(0 0 0 / 70%);
+	}
+}
+
+.footer-nav {
+	& span:hover {
+		color: rgba(255, 255, 255, 0.7);
+	}
+}
+
+.social-icons {
+	& a {
+		color: white;
+	}
+	& a:hover {
+		color: rgba(255, 255, 255, 0.7);
 	}
 }
 

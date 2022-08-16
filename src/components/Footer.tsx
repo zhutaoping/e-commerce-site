@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Nav } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 
 // icons
 import { BsFacebook, BsTwitter, BsYoutube } from "react-icons/bs";
@@ -26,19 +26,19 @@ const Footer = () => {
 							Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat
 							vitae quidem qui sint odit iure quia corporis distinctio
 						</p>
-						<div className="d-flex gap-3 justify-content-center justify-content-md-start">
-							<Nav.Link href="http://facebook.com">
+						<div className="d-flex gap-4 justify-content-center justify-content-md-start social-icons">
+							<a href="http://facebook.com">
 								<BsFacebook size={30} />
-							</Nav.Link>
-							<Nav.Link href="http://instagram.com">
-								<RiInstagramFill size={30} />
-							</Nav.Link>
-							<Nav.Link href="http://twitter.com">
+							</a>
+							<a href="http://instagram.com">
+								<RiInstagramFill size={32} />
+							</a>
+							<a href="http://twitter.com">
 								<BsTwitter size={30} />
-							</Nav.Link>
-							<Nav.Link href="http://youtube.com">
+							</a>
+							<a href="http://youtube.com">
 								<BsYoutube size={30} />
-							</Nav.Link>
+							</a>
 						</div>
 					</Col>
 
@@ -47,26 +47,28 @@ const Footer = () => {
 						md={6}
 						lg={4}
 					>
-						<div className="d-flex gap-5">
+						<div className="d-flex align-items-center gap-4 footer-nav">
 							<Nav.Link as={Link} to="/">
 								<span className="fs-5">Home</span>
 							</Nav.Link>
+							<span>|</span>
 							<Nav.Link as={Link} to="/cart">
 								<span className="fs-5">Cart</span>
 							</Nav.Link>
 						</div>
-						<div className="d-flex gap-5">
-							<Nav.Link as={Link} to="/">
+						<div className="footer-nav d-flex align-items-center gap-4">
+							<Nav.Link as={Link} to="/jewelry">
 								<span className="fs-5">Jewelry</span>
 							</Nav.Link>
-							<Nav.Link as={Link} to="/">
+							<span>|</span>
+							<Nav.Link as={Link} to="/electronics">
 								<span className="fs-5">Electronics</span>
 							</Nav.Link>
 						</div>
-						<Nav.Link as={Link} to="/">
+						<Nav.Link className="footer-nav" as={Link} to="/men">
 							<span className="fs-5">Men's Clothing</span>
 						</Nav.Link>
-						<Nav.Link as={Link} to="/">
+						<Nav.Link className="footer-nav" as={Link} to="/women">
 							<span className="fs-5">Women's Clothing</span>
 						</Nav.Link>
 					</Col>
