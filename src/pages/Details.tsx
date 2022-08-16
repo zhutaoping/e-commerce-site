@@ -12,23 +12,35 @@ const Details = () => {
 	const location = useLocation();
 	const state = location.state as State;
 
-	const { dispatch } = useProductContext();
+	const { localCart, dispatch } = useProductContext();
+
+	const handleIncrease = () => {
+		setQuasiCount((prev) => prev + 1);
+	};
 
 	const handleDecrease = () => {
 		if (quasiCount === 0) return;
 		setQuasiCount((prev) => prev - 1);
 	};
 
-	const handleIncrease = () => {
-		setQuasiCount((prev) => prev + 1);
-	};
-
 	const handleAddToCart = () => {
-		console.log(quasiCount);
-		dispatch({
-			type: "INCREASE",
-			payload: { ...state, addedCount: quasiCount },
-		});
+		if (quasiCount === 0) return;
+
+		if (!localCart.some((lo) => lo.id === state.id)) {
+			console.log("not in cart yet");
+			dispatch({
+				type: "ADD",
+				payload: {
+					...state,
+					addedCount: quasiCount,
+				},
+			});
+		} else {
+			dispatch({
+				type: "INCREASE",
+				payload: { ...state, addedCount: quasiCount },
+			});
+		}
 	};
 
 	useEffect(() => {

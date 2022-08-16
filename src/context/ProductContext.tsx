@@ -32,7 +32,13 @@ const localCartReducer = (localCart: State[], action: CartAction) => {
 			return [...localCart, ...payload];
 		case "ADD":
 			console.log("test add");
-			updateDocument(payload.id, 1);
+
+			if (payload.addedCount) {
+				updateDocument(payload.id, payload.addedCount);
+				payload.count = payload.addedCount;
+				payload.addedCount = 0;
+			}
+
 			return [...localCart, payload];
 		case "INCREASE":
 			console.log("test increase");
@@ -97,10 +103,14 @@ export const ProductContextProvider = ({ children }: Props) => {
 
 	useEffect(() => {
 		const currLocalCart = localStorage.getItem("localCart");
+
 		if (currLocalCart) {
 			const arr: State[] = JSON.parse(currLocalCart!);
 			dispatch({ type: "INIT", payload: arr });
-		} else return;
+		} else {
+			console.log("empty localCart");
+			return;
+		}
 	}, []);
 
 	useEffect(() => {
