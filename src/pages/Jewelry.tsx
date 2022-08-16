@@ -1,5 +1,19 @@
+import { useCollection } from "../hooks/useCollection";
+import ProductList from "../components/ProductList";
+
 const Jewelry = () => {
-	return <div>Jewelry</div>;
+	const { documents: products, error } = useCollection("products", [
+		"category",
+		"==",
+		"jewelry",
+	]);
+
+	return (
+		<div>
+			{error && <p className="error">{error}</p>}
+			{products && <ProductList products={products} />}
+		</div>
+	);
 };
 
 export default Jewelry;
