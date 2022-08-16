@@ -32,7 +32,7 @@ const Cart = () => {
 			(prev, curr) => prev + curr.price! * curr.count!,
 			0
 		);
-		setSubtotal(sum);
+		setSubtotal(+sum.toFixed(2));
 	}, [localCart]);
 
 	useEffect(() => {
@@ -97,12 +97,14 @@ const Cart = () => {
 								</p>
 								<div className="d-flex justify-content-between">
 									<h4 className="fw-light mb-3">Subtotal</h4>
-									<span className="fs-5 ">${subtotal}</span>
+									<span className="fs-5">${subtotal}</span>
 								</div>
 								<div className="d-flex justify-content-between text-muted mb-1">
 									<p className="p-0 mb-2">Discount</p>
 									<span className="ms-auto me-3">(20%)</span>
-									<span>- ${(subtotal * 0.2).toFixed(2)}</span>
+									<span>
+										{discount ? "- " : ""} ${(subtotal * 0.2).toFixed(2)}
+									</span>
 								</div>
 								<div className="d-flex justify-content-between text-muted">
 									<p className="p-0 mb-2">Delivery</p>
@@ -118,12 +120,12 @@ const Cart = () => {
 								</div>
 								<div className="d-flex justify-content-between mb-4">
 									<h4 className="mb-3">Total</h4>
-									<span>${total}</span>
+									<h4 className="">${total}</h4>
 								</div>
 							</Container>
 							<Container className="my-wrapper d-flex flex-column gap-2 mb-5">
 								<Button
-									className="click-down-button shadow"
+									className="click-down-button shadow-sm"
 									size="lg"
 									type="button"
 									variant="primary"
@@ -131,7 +133,7 @@ const Cart = () => {
 									Proceed to checkout
 								</Button>
 								<Button
-									className="click-down-button shadow"
+									className="click-down-button shadow-sm"
 									size="lg"
 									type="button"
 									variant="outline-secondary"

@@ -79,3 +79,13 @@ a {
 		max-width: 100%;
 	}
 }
+
+.signup-wrapper {
+	@media (min-width: 768px) {
+		max-width: 440px;
+	}
+}
+
+.myPureWhite {
+	background-color: #f8f9fa;
+}

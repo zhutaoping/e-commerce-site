@@ -1,4 +1,5 @@
 import { createContext, useReducer, useEffect } from "react";
+
 import { auth } from "../firebase/config";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -14,19 +15,27 @@ export const AuthContext = createContext<State>({
 	dispatch: () => null,
 });
 
+type User = {
+	uid: string;
+};
+
 type Action =
-	| { type: "LOGIN"; payload: {} | null }
-	| { type: "LOGOUT" }
-	| { type: "AUTH_IS_READY"; payload: {} | null };
+	| { type: "LOGIN"; payload: User }
+	| { type: "LOGOUT"; payload?: User }
+	| { type: "AUTH_IS_READY"; payload: User | null };
 
 export const authReducer = (state: State, action: Action): State => {
-	switch (action.type) {
-		case "LOGIN":
-			return { ...state, user: action.payload };
+	const { type, payload } = action;
+
+	switch (type) {
+		case "LOGIN": {
+			console.log(payload);
+			return { ...state, user: payload };
+		}
 		case "LOGOUT":
 			return { ...state, user: null };
 		case "AUTH_IS_READY":
-			return { user: action.payload, authIsReady: true };
+			return { user: payload, authIsReady: true };
 		default:
 			return state;
 	}

@@ -4,8 +4,12 @@ import { BsCart4 } from "react-icons/bs";
 import { useState } from "react";
 import { useProductContext } from "../hooks/useProductContext";
 
+import { useLogout } from "../hooks/useLogout";
+
 const NavbarBS = () => {
 	const [expanded, setExpanded] = useState(false);
+
+	const { logout } = useLogout();
 
 	const { localCart } = useProductContext();
 	const totalCount = localCart.reduce((prev, curr) => prev + curr.count!, 0);
@@ -72,6 +76,15 @@ const NavbarBS = () => {
 					to="/signup"
 				>
 					<span className="fs-5">Signup</span>
+				</Nav.Link>
+				<Nav.Link
+					// onClick={() => setExpanded(false)}
+					onClick={logout}
+					className="nav-login"
+					as={Link}
+					to="/signup"
+				>
+					<span className="fs-5">Logout</span>
 				</Nav.Link>
 				<Nav.Link onClick={() => setExpanded(false)} as={Link} to="/cart">
 					<div className="d-flex position-relative">

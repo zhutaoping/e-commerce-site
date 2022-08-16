@@ -87,7 +87,7 @@ const Footer = () => {
 							<FaPhone size={20} />
 							<p className="m-0">817-357-4407</p>
 						</span>
-						<span className="d-flex  gap-2 mb-3">
+						<span className="d-flex align-items-center gap-2 mb-3">
 							<AiTwotoneMail size={20} />
 							<p className="m-0">mockstore@gmail.com</p>
 						</span>
