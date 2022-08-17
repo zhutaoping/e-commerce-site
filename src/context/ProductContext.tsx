@@ -32,13 +32,11 @@ const localCartReducer = (localCart: State[], action: CartAction) => {
 			return [...payload];
 
 		case "ADD":
-			console.log("test add");
-
 			if (payload.addedCount) {
 				updateFirebaseDoc(payload.id, payload.addedCount);
 				payload.count = payload.addedCount;
-				payload.addedCount = 0;
 			}
+			// payload.addedCount = 0;
 			return [...localCart, payload];
 
 		case "INCREASE":

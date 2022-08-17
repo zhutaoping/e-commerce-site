@@ -26,17 +26,17 @@ const ProductList = ({ products }: Props) => {
 
 	const { localCart, dispatch } = useProductContext();
 
-	useEffect(() => {
-		window.scrollTo(0, 0);
-	}, []);
-
 	const handleLocalCart = (product: State) => {
 		if (localCart && localCart.some((p) => p.id === product.id)) {
 			dispatch({ type: "INCREASE", payload: { ...product, addedCount: 1 } });
 		} else {
-			dispatch({ type: "ADD", payload: { ...product, count: 1 } });
+			dispatch({ type: "ADD", payload: { ...product, addedCount: 1 } });
 		}
 	};
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 
 	return (
 		<div>

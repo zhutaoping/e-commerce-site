@@ -41,6 +41,7 @@ const Details = () => {
 				payload: { ...state, addedCount: quasiCount },
 			});
 		}
+		setQuasiCount(0);
 	};
 
 	useEffect(() => {

@@ -18,13 +18,13 @@ const CartItem = ({ items }: Props) => {
 
 	const handleIncrease = (item: State) => {
 		console.log("cartItem, handleIncrease");
-
+		
 		dispatch({
 			type: "INCREASE",
 			payload: { ...item, addedCount: 1 },
 		});
 	};
-
+	
 	const handleDecrease = (item: State) => {
 		console.log("cartItem, handleDecrease");
 		if (item.count! === 1) {
