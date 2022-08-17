@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useAuthContext } from "./hooks/useAuthContext";
+
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -12,6 +14,8 @@ import Jewelry from "./pages/Jewelry";
 import Electronics from "./pages/Electronics";
 
 function App() {
+	const { user } = useAuthContext();
+
 	return (
 		<div className="App">
 			<BrowserRouter>
@@ -23,8 +27,8 @@ function App() {
 					<Route path="/women" element={<Women />} />
 					<Route path="/jewelry" element={<Jewelry />} />
 					<Route path="/electronics" element={<Electronics />} />
-					<Route path="/signup" element={<Signup />} />
-					<Route path="/login" element={<Login />} />
+					<Route path="/signup" element={user ? <Home /> : <Signup />} />
+					<Route path="/login" element={user ? <Home /> : <Login />} />
 					<Route path="/cart" element={<Cart />} />
 				</Routes>
 				<Footer />

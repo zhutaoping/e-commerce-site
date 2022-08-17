@@ -29,56 +29,51 @@ const localCartReducer = (localCart: State[], action: CartAction) => {
 	const { type, payload } = action;
 	switch (type) {
 		case "INIT":
-			return [...localCart, ...payload];
+			return [...payload];
+
 		case "ADD":
 			console.log("test add");
 
 			if (payload.addedCount) {
-				updateDocument(payload.id, payload.addedCount);
+				updateFirebaseDoc(payload.id, payload.addedCount);
 				payload.count = payload.addedCount;
 				payload.addedCount = 0;
 			}
-
 			return [...localCart, payload];
-		case "INCREASE":
-			console.log("test increase");
 
+		case "INCREASE":
 			let loCountIncre: number = 0;
 			const tempIncre = localCart.map((lo) => {
 				if (lo.id === payload.id) {
 					loCountIncre = lo.count! + payload.addedCount!;
-					lo.count = loCountIncre;
-				}
-				return lo;
+					return { ...lo, count: loCountIncre };
+				} else return lo;
 			});
-			console.log(tempIncre);
-			updateDocument(payload.id, loCountIncre);
+			updateFirebaseDoc(payload.id, loCountIncre);
 			return [...tempIncre];
-		case "DECREASE":
-			console.log("test decrease");
 
+		case "DECREASE":
 			let loCountDecre: number = 0;
 			const tempDecre = localCart.map((lo) => {
 				if (lo.id === payload.id) {
 					loCountDecre = lo.count! - payload.addedCount!;
-					lo.count = loCountDecre;
-				}
-				return lo;
+					return { ...lo, count: loCountDecre };
+				} else return lo;
 			});
-			console.log(tempDecre);
-			updateDocument(payload.id, loCountDecre);
+			updateFirebaseDoc(payload.id, loCountDecre);
 			return [...tempDecre];
+
 		case "DELETE":
-			console.log("test delete", payload);
-			updateDocument(payload, 0);
+			updateFirebaseDoc(payload, 0);
 			const tempDelete = localCart.filter((lo) => lo.id !== payload);
 			return [...tempDelete];
+
 		default:
 			return localCart;
 	}
 };
 
-const updateDocument = async (id: string, loCount: number) => {
+const updateFirebaseDoc = async (id: string, loCount: number) => {
 	const productRef = doc(db, "products", id);
 	await updateDoc(productRef, {
 		count: loCount,

@@ -10,6 +10,7 @@ const Jewelry = () => {
 
 	return (
 		<div>
+			<h4 className="p-4 text-center">Jewelry</h4>
 			{error && <p className="error">{error}</p>}
 			{products && <ProductList products={products} />}
 		</div>

@@ -17,6 +17,8 @@ const CartItem = ({ items }: Props) => {
 	const navigate = useNavigate();
 
 	const handleIncrease = (item: State) => {
+		console.log("cartItem, handleIncrease");
+
 		dispatch({
 			type: "INCREASE",
 			payload: { ...item, addedCount: 1 },
@@ -24,7 +26,10 @@ const CartItem = ({ items }: Props) => {
 	};
 
 	const handleDecrease = (item: State) => {
-		if (item.count === 0) return;
+		console.log("cartItem, handleDecrease");
+		if (item.count! === 1) {
+			handleDelete(item.id);
+		}
 
 		dispatch({
 			type: "DECREASE",
@@ -70,7 +75,7 @@ const CartItem = ({ items }: Props) => {
 								</h6>
 								<span className="fs-5 ">${item.price}</span>
 							</Container>
-							<Container className="d-flex align-items-baseline justify-content-between">
+							<Container className="d-flex align-items-baseline justify-content-between pe-0">
 								<h1
 									role="button"
 									className="click-down-button text-warning fw-bold mb-0 ps-md-4"

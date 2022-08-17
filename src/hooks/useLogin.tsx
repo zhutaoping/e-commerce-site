@@ -24,11 +24,12 @@ export const useLogin = () => {
 				});
 
 				dispatch!({ type: "LOGIN", payload: res.user });
+				setIsPending(false);
 			})
 			.catch((err) => {
 				setError(err.code);
+				setIsPending(false);
 			});
-		setIsPending(false);
 	};
 
 	return { error, isPending, login };

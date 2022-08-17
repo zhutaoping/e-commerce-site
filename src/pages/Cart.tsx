@@ -21,7 +21,7 @@ const Cart = () => {
 	const [total, setTotal] = useState(0);
 
 	const { localCart } = useProductContext();
-	console.log("localCart", localCart);
+	// console.log("localCart", localCart);
 
 	const navigate = useNavigate();
 

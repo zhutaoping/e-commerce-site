@@ -11,6 +11,9 @@ const Login = () => {
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		login(email, password);
+
+		setEmail("");
+		setPassword("");
 	};
 
 	return (
@@ -39,10 +42,16 @@ const Login = () => {
 						value={password}
 					/>
 				</Form.Group>
-
-				<Button variant="primary" type="submit">
-					Submit
-				</Button>
+				{!isPending && (
+					<Button variant="primary" type="submit">
+						Submit
+					</Button>
+				)}
+				{isPending && (
+					<Button variant="primary" type="submit" disabled>
+						loading...
+					</Button>
+				)}
 				{error && <p className="error">{error}</p>}
 			</Form>
 		</Container>

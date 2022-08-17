@@ -2,11 +2,7 @@ import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 
 import { auth } from "../firebase/config";
-import {
-	createUserWithEmailAndPassword,
-	getAuth,
-	updateProfile,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { db } from "../firebase/config";
 import { setDoc, doc } from "firebase/firestore";
 
@@ -25,20 +21,19 @@ export const useSignup = () => {
 					throw new Error("無法完成註冊");
 				}
 
-				if (auth.currentUser) {
-					updateProfile(auth.currentUser, {
-						displayName: displayName,
-					}).then(() => {
-						console.log("Profile updated!!");
-					});
-				}
+				updateProfile(auth.currentUser!, {
+					displayName: displayName,
+				}).then(() => {
+					console.log("Profile updated!!");
+				});
 
 				setDoc(doc(db, "users", res.user.uid), {
 					online: true,
-					displayName: displayName,
 				});
 
 				dispatch!({ type: "LOGIN", payload: res.user });
+
+				setIsPending(false);
 			})
 			.catch((err) => {
 				setIsPending(false);

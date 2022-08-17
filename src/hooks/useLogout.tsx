@@ -4,10 +4,12 @@ import { doc, updateDoc } from "firebase/firestore";
 
 import { useAuthContext } from "./useAuthContext";
 
+import { useNavigate } from "react-router-dom";
+
 export const useLogout = () => {
 	const { dispatch, user } = useAuthContext();
-	// const { uid } = user;
-	// console.log(uid);
+
+	const navigate = useNavigate();
 
 	const logout = () => {
 		signOut(auth)
@@ -18,6 +20,7 @@ export const useLogout = () => {
 				updateDoc(userRef, {
 					online: false,
 				});
+				navigate("/");
 
 				dispatch!({ type: "LOGOUT", payload: null });
 			})

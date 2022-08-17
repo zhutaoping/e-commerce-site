@@ -1,20 +1,24 @@
-import { Nav, Navbar, Badge, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { BsCart4 } from "react-icons/bs";
 import { useState } from "react";
-import { useProductContext } from "../hooks/useProductContext";
+import { Link } from "react-router-dom";
+import { Nav, Navbar, Badge, Container } from "react-bootstrap";
+import { BsCart4 } from "react-icons/bs";
 
+import { useProductContext } from "../hooks/useProductContext";
 import { useLogout } from "../hooks/useLogout";
+
+import { auth } from "../firebase/config";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const NavbarBS = () => {
 	const [expanded, setExpanded] = useState(false);
 
 	const { logout } = useLogout();
 
-	const { localCart } = useProductContext();
-	const totalCount = localCart.reduce((prev, curr) => prev + curr.count!, 0);
+	const { user } = useAuthContext();
 
-	// localCart.map((lo) => console.log(count));
+	const { localCart } = useProductContext();
+
+	const totalCount = localCart.reduce((prev, curr) => prev + curr.count!, 0);
 
 	return (
 		<Navbar
@@ -61,33 +65,51 @@ const NavbarBS = () => {
 					</Nav>
 				</Navbar.Collapse>
 
-				<Nav.Link
-					onClick={() => setExpanded(false)}
-					className="nav-login"
-					as={Link}
-					to="/login"
-				>
-					<span className="fs-5">Login</span>
-				</Nav.Link>
-				<Nav.Link
-					onClick={() => setExpanded(false)}
-					className="nav-login"
-					as={Link}
-					to="/signup"
-				>
-					<span className="fs-5">Signup</span>
-				</Nav.Link>
-				<Nav.Link
-					// onClick={() => setExpanded(false)}
-					onClick={logout}
-					className="nav-login"
-					as={Link}
-					to="/signup"
-				>
-					<span className="fs-5">Logout</span>
-				</Nav.Link>
+				{!user && (
+					<Nav.Link
+						onClick={() => setExpanded(false)}
+						className="nav-login me-2 me-md-3"
+						as={Link}
+						to="/login"
+					>
+						<span className="fs-5">Login</span>
+					</Nav.Link>
+				)}
+
+				{!user && (
+					<Nav.Link
+						onClick={() => setExpanded(false)}
+						className="nav-login me-2 me-md-3"
+						as={Link}
+						to="/signup"
+					>
+						<span className="fs-5">Signup</span>
+					</Nav.Link>
+				)}
+
+				{user && (
+					<span className="fs-5 me-2 me-md-4">
+						hi, {auth.currentUser && auth.currentUser.displayName}
+					</span>
+				)}
+
+				{user && (
+					<Nav.Link
+						// onClick={() => setExpanded(false)}
+						onClick={() => {
+							setExpanded(false);
+							logout();
+						}}
+						className="nav-login me-2 me-md-3"
+						as={Link}
+						to="/signup"
+					>
+						<span className="fs-5">Logout</span>
+					</Nav.Link>
+				)}
+
 				<Nav.Link onClick={() => setExpanded(false)} as={Link} to="/cart">
-					<div className="d-flex position-relative">
+					<div className="d-flex position-relative me-3">
 						<BsCart4 size={24} />
 						<Badge
 							bg="danger"

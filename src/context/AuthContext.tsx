@@ -24,12 +24,8 @@ export const authReducer = (state: State, action: Action): State => {
 	const { type, payload } = action;
 
 	switch (type) {
-		case "LOGIN": {
-			{
-				console.log("login", state);
-				return { ...state, user: payload };
-			}
-		}
+		case "LOGIN":
+			return { ...state, user: payload };
 		case "LOGOUT":
 			return { ...state, user: null };
 		case "AUTH_IS_READY":

@@ -10,6 +10,7 @@ const Electronics = () => {
 
 	return (
 		<div>
+			<h4 className="p-4 text-center">Electronics</h4>
 			{error && <p className="error">{error}</p>}
 			{products && <ProductList products={products} />}
 		</div>
