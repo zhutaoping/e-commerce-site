@@ -19,7 +19,7 @@ export const useLogout = () => {
 					online: false,
 				});
 
-				dispatch!({ type: "LOGOUT" });
+				dispatch!({ type: "LOGOUT", payload: null });
 			})
 			.catch((err) => {
 				console.log(err.message);

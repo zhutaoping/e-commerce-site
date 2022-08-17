@@ -14,7 +14,6 @@ export const useCollection = (c: string, _q?: string[]) => {
 	const [error, setError] = useState<ReactNode>();
 
 	const q = useRef(_q).current;
-	console.log(q);
 
 	useEffect(() => {
 		let ref: CollectionReference = collection(db, c);

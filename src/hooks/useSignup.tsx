@@ -24,14 +24,21 @@ export const useSignup = () => {
 				if (!res) {
 					throw new Error("無法完成註冊");
 				}
-				const user = res.user;
 
-				setDoc(doc(db, "users", user.uid), {
+				if (auth.currentUser) {
+					updateProfile(auth.currentUser, {
+						displayName: displayName,
+					}).then(() => {
+						console.log("Profile updated!!");
+					});
+				}
+
+				setDoc(doc(db, "users", res.user.uid), {
 					online: true,
-					displayName,
+					displayName: displayName,
 				});
 
-				dispatch!({ type: "LOGIN", payload: user });
+				dispatch!({ type: "LOGIN", payload: res.user });
 			})
 			.catch((err) => {
 				setIsPending(false);

@@ -15,22 +15,20 @@ export const AuthContext = createContext<State>({
 	dispatch: () => null,
 });
 
-type User = {
-	uid: string;
-};
-
 type Action =
-	| { type: "LOGIN"; payload: User }
-	| { type: "LOGOUT"; payload?: User }
-	| { type: "AUTH_IS_READY"; payload: User | null };
+	| { type: "LOGIN"; payload: {} }
+	| { type: "LOGOUT"; payload: null }
+	| { type: "AUTH_IS_READY"; payload: {} | null };
 
 export const authReducer = (state: State, action: Action): State => {
 	const { type, payload } = action;
 
 	switch (type) {
 		case "LOGIN": {
-			console.log(payload);
-			return { ...state, user: payload };
+			{
+				console.log("login", state);
+				return { ...state, user: payload };
+			}
 		}
 		case "LOGOUT":
 			return { ...state, user: null };
