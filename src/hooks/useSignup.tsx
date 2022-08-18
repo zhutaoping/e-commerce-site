@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { db } from "../firebase/config";
 import { setDoc, doc } from "firebase/firestore";
 
+
 export const useSignup = () => {
 	const [isPending, setIsPending] = useState(false);
 	const [error, setError] = useState(null);
@@ -29,6 +30,7 @@ export const useSignup = () => {
 
 				setDoc(doc(db, "users", res.user.uid), {
 					online: true,
+					items: [],
 				});
 
 				dispatch!({ type: "LOGIN", payload: res.user });

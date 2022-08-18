@@ -7,10 +7,10 @@ import {
 	query,
 	where,
 } from "firebase/firestore";
-import { State } from "../components/ProductList";
+import { ProductState } from "../interfaces/ProductState";
 
 export const useCollection = (c: string, _q?: string[]) => {
-	const [documents, setDocuments] = useState<State[]>();
+	const [documents, setDocuments] = useState<ProductState[]>();
 	const [error, setError] = useState<ReactNode>();
 
 	const q = useRef(_q).current;

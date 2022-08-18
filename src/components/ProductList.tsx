@@ -1,24 +1,13 @@
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { BsCartPlus } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+
+import { ProductState } from "../interfaces/ProductState";
 
 import { useProductContext } from "../hooks/useProductContext";
 
-export interface State {
-	id: string;
-	title?: string;
-	shortTitle?: string;
-	price?: number;
-	description?: string;
-	category?: string;
-	image?: string;
-	count?: number;
-	addedCount?: number;
-}
-
 type Props = {
-	products: State[];
+	products: ProductState[];
 };
 
 const ProductList = ({ products }: Props) => {
@@ -26,17 +15,13 @@ const ProductList = ({ products }: Props) => {
 
 	const { localCart, dispatch } = useProductContext();
 
-	const handleLocalCart = (product: State) => {
+	const handleLocalCart = (product: ProductState) => {
 		if (localCart && localCart.some((p) => p.id === product.id)) {
 			dispatch({ type: "INCREASE", payload: { ...product, addedCount: 1 } });
 		} else {
 			dispatch({ type: "ADD", payload: { ...product, addedCount: 1 } });
 		}
 	};
-
-	useEffect(() => {
-		window.scrollTo(0, 0);
-	}, []);
 
 	return (
 		<div>

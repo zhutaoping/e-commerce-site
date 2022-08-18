@@ -14,9 +14,8 @@ export const useLogout = () => {
 	const logout = () => {
 		signOut(auth)
 			.then(() => {
-				// console.log(res);
 				//@ts-ignore
-				const userRef = doc(db, "users", user.uid);
+				const userRef = doc(db, "users", user.uid); // fix me
 				updateDoc(userRef, {
 					online: false,
 				});

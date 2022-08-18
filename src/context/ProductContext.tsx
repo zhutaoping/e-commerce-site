@@ -5,27 +5,26 @@ import React, {
 	useRef,
 	useReducer,
 } from "react";
-import { State } from "../components/ProductList";
+
+// import { State } from "../components/ProductList";
+import { ProductState } from "../interfaces/ProductState";
 
 import { db } from "../firebase/config";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, deleteField } from "firebase/firestore";
+import { auth } from "../firebase/config";
 
 type Props = {
 	children: React.ReactNode;
 };
 
-// interface ExtendedState extends State {
-// 	addedCount?: number;
-// }
-
 type CartAction =
-	| { type: "INIT"; payload: State[] }
-	| { type: "ADD"; payload: State }
-	| { type: "INCREASE"; payload: State }
-	| { type: "DECREASE"; payload: State }
+	| { type: "INIT"; payload: ProductState[] }
+	| { type: "ADD"; payload: ProductState }
+	| { type: "INCREASE"; payload: ProductState }
+	| { type: "DECREASE"; payload: ProductState }
 	| { type: "DELETE"; payload: string };
 
-const localCartReducer = (localCart: State[], action: CartAction) => {
+const localCartReducer = (localCart: ProductState[], action: CartAction) => {
 	const { type, payload } = action;
 	switch (type) {
 		case "INIT":
@@ -33,10 +32,11 @@ const localCartReducer = (localCart: State[], action: CartAction) => {
 
 		case "ADD":
 			if (payload.addedCount) {
-				updateFirebaseDoc(payload.id, payload.addedCount);
+				// updateFirebaseDoc(payload.id, payload.addedCount);
 				payload.count = payload.addedCount;
 			}
-			// payload.addedCount = 0;
+			payload.addedCount = 0;
+			addDocCart(payload);
 			return [...localCart, payload];
 
 		case "INCREASE":
@@ -47,7 +47,7 @@ const localCartReducer = (localCart: State[], action: CartAction) => {
 					return { ...lo, count: loCountIncre };
 				} else return lo;
 			});
-			updateFirebaseDoc(payload.id, loCountIncre);
+			updateDocCart(tempIncre);
 			return [...tempIncre];
 
 		case "DECREASE":
@@ -58,12 +58,12 @@ const localCartReducer = (localCart: State[], action: CartAction) => {
 					return { ...lo, count: loCountDecre };
 				} else return lo;
 			});
-			updateFirebaseDoc(payload.id, loCountDecre);
+			updateDocCart(tempDecre);
 			return [...tempDecre];
 
 		case "DELETE":
-			updateFirebaseDoc(payload, 0);
 			const tempDelete = localCart.filter((lo) => lo.id !== payload);
+			updateDocCart(tempDelete);
 			return [...tempDelete];
 
 		default:
@@ -71,15 +71,28 @@ const localCartReducer = (localCart: State[], action: CartAction) => {
 	}
 };
 
-const updateFirebaseDoc = async (id: string, loCount: number) => {
-	const productRef = doc(db, "products", id);
-	await updateDoc(productRef, {
-		count: loCount,
+const addDocCart = async (item: ProductState) => {
+	const userRef = doc(db, "users", auth.currentUser!.uid);
+
+	await updateDoc(userRef, {
+		items: arrayUnion(item),
+	});
+};
+
+const updateDocCart = async (items: ProductState[]) => {
+	const userRef = doc(db, "users", auth.currentUser!.uid);
+
+	await updateDoc(userRef, {
+		items: deleteField(),
+	});
+
+	await updateDoc(userRef, {
+		items: arrayUnion(...items),
 	});
 };
 
 type Context = {
-	localCart: State[];
+	localCart: ProductState[];
 	dispatch: React.Dispatch<CartAction>;
 };
 
@@ -89,7 +102,7 @@ export const ProductContext = createContext<Context>({
 });
 
 export const ProductContextProvider = ({ children }: Props) => {
-	const [cartItems, setCartItems] = useState<State[]>([]);
+	const [cartItems, setCartItems] = useState<ProductState[]>([]);
 	const [localCart, dispatch] = useReducer(localCartReducer, []);
 
 	const initRender = useRef(true);
@@ -98,7 +111,7 @@ export const ProductContextProvider = ({ children }: Props) => {
 		const currLocalCart = localStorage.getItem("localCart");
 
 		if (currLocalCart) {
-			const arr: State[] = JSON.parse(currLocalCart!);
+			const arr: ProductState[] = JSON.parse(currLocalCart!);
 			dispatch({ type: "INIT", payload: arr });
 		} else {
 			console.log("empty localCart");

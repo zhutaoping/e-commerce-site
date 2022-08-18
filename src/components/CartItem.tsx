@@ -1,5 +1,5 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
-import { State } from "./ProductList";
+import { Container, Row, Col } from "react-bootstrap";
+import { ProductState } from "../interfaces/ProductState";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +8,7 @@ import { FaTrash } from "react-icons/fa";
 import { useProductContext } from "../hooks/useProductContext";
 
 type Props = {
-	items: State[];
+	items: ProductState[];
 };
 
 const CartItem = ({ items }: Props) => {
@@ -16,16 +16,16 @@ const CartItem = ({ items }: Props) => {
 
 	const navigate = useNavigate();
 
-	const handleIncrease = (item: State) => {
+	const handleIncrease = (item: ProductState) => {
 		console.log("cartItem, handleIncrease");
-		
+
 		dispatch({
 			type: "INCREASE",
 			payload: { ...item, addedCount: 1 },
 		});
 	};
-	
-	const handleDecrease = (item: State) => {
+
+	const handleDecrease = (item: ProductState) => {
 		console.log("cartItem, handleDecrease");
 		if (item.count! === 1) {
 			handleDelete(item.id);

@@ -1,7 +1,7 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import { State } from "../components/ProductList";
-import { useEffect, useState } from "react";
+import { ProductState } from "../interfaces/ProductState";
+import { useState } from "react";
 import { useProductContext } from "../hooks/useProductContext";
 
 import { BsCartPlus } from "react-icons/bs";
@@ -10,7 +10,7 @@ const Details = () => {
 	const [quasiCount, setQuasiCount] = useState(0);
 
 	const location = useLocation();
-	const state = location.state as State;
+	const state = location.state as ProductState;
 
 	const { localCart, dispatch } = useProductContext();
 
@@ -44,17 +44,13 @@ const Details = () => {
 		setQuasiCount(0);
 	};
 
-	useEffect(() => {
-		window.scrollTo(0, 0);
-	}, []);
-
 	return (
 		<div>
 			<Container className="my-5">
 				<Row className="gap-5 p-sm-0">
 					<Col className="me-5 my-auto" sm={12} xl={6}>
 						<img
-							className="img-fluid align-items-center text-center"
+							className="img-fluid d-flex mx-auto align-items-center text-center"
 							src={state.image}
 							alt="product details"
 						/>

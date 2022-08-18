@@ -13,6 +13,8 @@ import Women from "./pages/Women";
 import Jewelry from "./pages/Jewelry";
 import Electronics from "./pages/Electronics";
 
+import ScrollToTop from "./components/ScrollToTop";
+
 function App() {
 	const { user } = useAuthContext();
 
@@ -20,6 +22,7 @@ function App() {
 		<div className="App">
 			<BrowserRouter>
 				<Navbar />
+				<ScrollToTop />
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/details/:id" element={<Details />} />
