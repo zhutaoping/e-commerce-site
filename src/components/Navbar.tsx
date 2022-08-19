@@ -100,7 +100,7 @@ const NavbarBS = () => {
 				)}
 
 				{user && (
-					<span className="fs-5 me-2 me-md-4">
+					<span className="d-none d-sm-flex fs-5 me-2 me-md-4">
 						hi, {auth.currentUser && auth.currentUser.displayName}
 					</span>
 				)}
