@@ -1,11 +1,10 @@
 import { useState } from "react";
+import { useAuthContext } from "./useAuthContext";
 
 import { auth } from "../firebase/config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { db } from "../firebase/config";
 import { updateDoc, doc } from "firebase/firestore";
-
-import { useAuthContext } from "./useAuthContext";
 
 export const useLogin = () => {
 	const [isPending, setIsPending] = useState(false);

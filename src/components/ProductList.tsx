@@ -3,7 +3,6 @@ import { BsCartPlus } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 
 import { ProductState } from "../types/myTypes";
-
 import { useProductContext } from "../hooks/useProductContext";
 
 type Props = {

@@ -1,10 +1,10 @@
-import { Container, Row, Col } from "react-bootstrap";
-import { ProductState } from "../types/myTypes";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
 
 import { FaTrash } from "react-icons/fa";
 
+import { ProductState } from "../types/myTypes";
 import { useProductContext } from "../hooks/useProductContext";
 
 type Props = {

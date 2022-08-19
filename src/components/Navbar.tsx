@@ -19,32 +19,18 @@ const NavbarBS = () => {
 
 	const { localCart, dispatch } = useProductContext();
 
-	const { documents, error } = useCollectionUser("users", [
-		"online",
-		"==",
-		//@ts-ignore
-		true,
-	]);
+	const { documents } = useCollectionUser("users", ["online", "==", true]);
 
 	useEffect(() => {
 		if (documents) {
-			console.log(documents);
 			dispatch({ type: "INIT", payload: documents });
 		}
-	}, [documents]);
+	}, [documents, dispatch]);
 
 	const totalLocalCartCount = localCart.reduce(
 		(prev, curr) => prev + curr.count!,
 		0
 	);
-
-	let totalUserCartCount: number = 0;
-	if (documents) {
-		totalUserCartCount = documents!.reduce(
-			(prev, curr) => prev + curr.count!,
-			0
-		);
-	}
 
 	return (
 		<Navbar
@@ -121,7 +107,6 @@ const NavbarBS = () => {
 
 				{user && (
 					<Nav.Link
-						// onClick={() => setExpanded(false)}
 						onClick={() => {
 							setExpanded(false);
 							logout();
@@ -141,8 +126,7 @@ const NavbarBS = () => {
 							bg="danger"
 							className="position-absolute top-0 start-100 translate-middle rounded-pill bg-danger"
 						>
-							{user && (documents ? totalUserCartCount : 0)}
-							{!user && (localCart ? totalLocalCartCount : 0)}
+							{localCart ? totalLocalCartCount : 0}
 							<span className="visually-hidden">shopping cart items</span>
 						</Badge>
 					</div>

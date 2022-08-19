@@ -19,15 +19,12 @@ const Details = () => {
 	};
 
 	const handleDecrease = () => {
-		if (quasiCount === 0) return;
+		if (quasiCount === 1) return;
 		setQuasiCount((prev) => prev - 1);
 	};
 
 	const handleAddToCart = () => {
-		if (quasiCount === 0) return;
-
 		if (!localCart.some((lo) => lo.id === state.id)) {
-			console.log("not in cart yet");
 			dispatch({
 				type: "ADD",
 				payload: {

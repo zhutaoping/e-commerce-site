@@ -1,8 +1,6 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Nav, Navbar } from "react-bootstrap";
 
-// icons
 import { BsFacebook, BsTwitter, BsYoutube } from "react-icons/bs";
 import { RiInstagramFill } from "react-icons/ri";
 import {

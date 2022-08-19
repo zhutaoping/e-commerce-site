@@ -2,26 +2,29 @@ import { useState, useEffect, ReactNode, useRef } from "react";
 import { db } from "../firebase/config";
 import {
 	collection,
-	CollectionReference,
 	onSnapshot,
 	query,
 	where,
+	WhereFilterOp,
+	DocumentData,
+	Query,
 } from "firebase/firestore";
 import { ProductState } from "../types/myTypes";
 
-export const useCollection = (c: string, _q?: string[]) => {
-	const [documents, setDocuments] = useState<ProductState[]>();
+export const useCollection = (
+	c: string,
+	_q?: [string, WhereFilterOp, string]
+) => {
+	const [documents, setDocuments] = useState<ProductState[] | null>(null);
 	const [error, setError] = useState<ReactNode>();
 
 	const q = useRef(_q).current;
 
 	useEffect(() => {
-		let ref: CollectionReference = collection(db, c);
+		let ref: Query<DocumentData> = collection(db, c);
 
 		if (q) {
-			//@ts-ignore
 			ref = query(ref, where(...q));
-			console.log(ref);
 		}
 
 		const unsub = onSnapshot(
@@ -35,7 +38,7 @@ export const useCollection = (c: string, _q?: string[]) => {
 				setError(null);
 			},
 			(err) => {
-				setError("無法取得資料");
+				setError("err.code");
 			}
 		);
 

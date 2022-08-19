@@ -11,14 +11,17 @@ export const useLogout = () => {
 
 	const navigate = useNavigate();
 
+	const userId = auth.currentUser ? auth.currentUser.uid : "";
+
 	const logout = () => {
 		signOut(auth)
 			.then(() => {
-				//@ts-ignore
-				const userRef = doc(db, "users", user.uid); // fix me
-				updateDoc(userRef, {
-					online: false,
-				});
+				if (user) {
+					const userRef = doc(db, "users", userId);
+					updateDoc(userRef, {
+						online: false,
+					});
+				}
 				navigate("/");
 
 				dispatch!({ type: "LOGOUT", payload: null });

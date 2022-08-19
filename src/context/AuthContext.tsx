@@ -3,8 +3,12 @@ import { createContext, useReducer, useEffect } from "react";
 import { auth } from "../firebase/config";
 import { onAuthStateChanged } from "firebase/auth";
 
+interface UserAuth {
+	uid: string;
+}
+
 interface State {
-	user: {} | null;
+	user: {} | UserAuth | null;
 	authIsReady: boolean;
 	dispatch?: React.Dispatch<Action>;
 }

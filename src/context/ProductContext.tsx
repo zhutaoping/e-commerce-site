@@ -1,10 +1,8 @@
 import React, { createContext, useEffect, useRef, useReducer } from "react";
 import { ProductState } from "../types/myTypes";
-import { useCollectionUser } from "../hooks/useCollectionUser";
 
-import { db } from "../firebase/config";
+import { db, auth } from "../firebase/config";
 import { doc, updateDoc, arrayUnion, deleteField } from "firebase/firestore";
-import { auth } from "../firebase/config";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 type Props = {
@@ -26,7 +24,6 @@ const localCartReducer = (localCart: ProductState[], action: CartAction) => {
 
 		case "ADD":
 			if (payload.addedCount) {
-				// updateFirebaseDoc(payload.id, payload.addedCount);
 				payload.count = payload.addedCount;
 			}
 			payload.addedCount = 0;
@@ -67,8 +64,6 @@ const localCartReducer = (localCart: ProductState[], action: CartAction) => {
 };
 
 const addDocCart = async (item: ProductState) => {
-	console.log(auth);
-
 	const userRef = doc(db, "users", auth.currentUser!.uid);
 
 	await updateDoc(userRef, {
@@ -103,7 +98,6 @@ export const ProductContext = createContext<Context>({
 });
 
 export const ProductContextProvider = ({ children }: Props) => {
-	// const [cartItems, setCartItems] = useState<ProductState[]>([]);
 	const [localCart, dispatch] = useReducer(localCartReducer, []);
 
 	const initRender = useRef(true);
