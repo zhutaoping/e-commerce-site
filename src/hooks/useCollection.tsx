@@ -7,7 +7,7 @@ import {
 	query,
 	where,
 } from "firebase/firestore";
-import { ProductState } from "../interfaces/ProductState";
+import { ProductState } from "../types/myTypes";
 
 export const useCollection = (c: string, _q?: string[]) => {
 	const [documents, setDocuments] = useState<ProductState[]>();

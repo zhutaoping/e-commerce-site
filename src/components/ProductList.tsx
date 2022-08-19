@@ -2,7 +2,7 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import { BsCartPlus } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 
-import { ProductState } from "../interfaces/ProductState";
+import { ProductState } from "../types/myTypes";
 
 import { useProductContext } from "../hooks/useProductContext";
 

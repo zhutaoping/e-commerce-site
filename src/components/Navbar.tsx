@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Nav, Navbar, Badge, Container } from "react-bootstrap";
 import { BsCart4 } from "react-icons/bs";
 
 import { useProductContext } from "../hooks/useProductContext";
 import { useLogout } from "../hooks/useLogout";
+import { useCollectionUser } from "../hooks/useCollectionUser";
 
 import { auth } from "../firebase/config";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -16,9 +17,34 @@ const NavbarBS = () => {
 
 	const { user } = useAuthContext();
 
-	const { localCart } = useProductContext();
+	const { localCart, dispatch } = useProductContext();
 
-	const totalCount = localCart.reduce((prev, curr) => prev + curr.count!, 0);
+	const { documents, error } = useCollectionUser("users", [
+		"online",
+		"==",
+		//@ts-ignore
+		true,
+	]);
+
+	useEffect(() => {
+		if (documents) {
+			console.log(documents);
+			dispatch({ type: "INIT", payload: documents });
+		}
+	}, [documents]);
+
+	const totalLocalCartCount = localCart.reduce(
+		(prev, curr) => prev + curr.count!,
+		0
+	);
+
+	let totalUserCartCount: number = 0;
+	if (documents) {
+		totalUserCartCount = documents!.reduce(
+			(prev, curr) => prev + curr.count!,
+			0
+		);
+	}
 
 	return (
 		<Navbar
@@ -115,7 +141,8 @@ const NavbarBS = () => {
 							bg="danger"
 							className="position-absolute top-0 start-100 translate-middle rounded-pill bg-danger"
 						>
-							{localCart ? totalCount : 0}
+							{user && (documents ? totalUserCartCount : 0)}
+							{!user && (localCart ? totalLocalCartCount : 0)}
 							<span className="visually-hidden">shopping cart items</span>
 						</Badge>
 					</div>

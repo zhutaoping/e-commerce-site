@@ -1,17 +1,11 @@
-import React, {
-	createContext,
-	useState,
-	useEffect,
-	useRef,
-	useReducer,
-} from "react";
-
-// import { State } from "../components/ProductList";
-import { ProductState } from "../interfaces/ProductState";
+import React, { createContext, useEffect, useRef, useReducer } from "react";
+import { ProductState } from "../types/myTypes";
+import { useCollectionUser } from "../hooks/useCollectionUser";
 
 import { db } from "../firebase/config";
 import { doc, updateDoc, arrayUnion, deleteField } from "firebase/firestore";
 import { auth } from "../firebase/config";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 type Props = {
 	children: React.ReactNode;
@@ -36,7 +30,8 @@ const localCartReducer = (localCart: ProductState[], action: CartAction) => {
 				payload.count = payload.addedCount;
 			}
 			payload.addedCount = 0;
-			addDocCart(payload);
+
+			auth.currentUser && addDocCart(payload);
 			return [...localCart, payload];
 
 		case "INCREASE":
@@ -47,7 +42,7 @@ const localCartReducer = (localCart: ProductState[], action: CartAction) => {
 					return { ...lo, count: loCountIncre };
 				} else return lo;
 			});
-			updateDocCart(tempIncre);
+			auth.currentUser && updateDocCart(tempIncre);
 			return [...tempIncre];
 
 		case "DECREASE":
@@ -58,12 +53,12 @@ const localCartReducer = (localCart: ProductState[], action: CartAction) => {
 					return { ...lo, count: loCountDecre };
 				} else return lo;
 			});
-			updateDocCart(tempDecre);
+			auth.currentUser && updateDocCart(tempDecre);
 			return [...tempDecre];
 
 		case "DELETE":
 			const tempDelete = localCart.filter((lo) => lo.id !== payload);
-			updateDocCart(tempDelete);
+			auth.currentUser && updateDocCart(tempDelete);
 			return [...tempDelete];
 
 		default:
@@ -72,6 +67,8 @@ const localCartReducer = (localCart: ProductState[], action: CartAction) => {
 };
 
 const addDocCart = async (item: ProductState) => {
+	console.log(auth);
+
 	const userRef = doc(db, "users", auth.currentUser!.uid);
 
 	await updateDoc(userRef, {
@@ -80,8 +77,12 @@ const addDocCart = async (item: ProductState) => {
 };
 
 const updateDocCart = async (items: ProductState[]) => {
-	const userRef = doc(db, "users", auth.currentUser!.uid);
+	let uid: string = "";
+	if (auth.currentUser) {
+		uid = auth.currentUser.uid;
+	}
 
+	const userRef = doc(db, "users", uid);
 	await updateDoc(userRef, {
 		items: deleteField(),
 	});
@@ -102,12 +103,16 @@ export const ProductContext = createContext<Context>({
 });
 
 export const ProductContextProvider = ({ children }: Props) => {
-	const [cartItems, setCartItems] = useState<ProductState[]>([]);
+	// const [cartItems, setCartItems] = useState<ProductState[]>([]);
 	const [localCart, dispatch] = useReducer(localCartReducer, []);
 
 	const initRender = useRef(true);
 
+	const { user } = useAuthContext();
+
 	useEffect(() => {
+		if (user) return;
+
 		const currLocalCart = localStorage.getItem("localCart");
 
 		if (currLocalCart) {

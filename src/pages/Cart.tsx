@@ -10,8 +10,13 @@ import {
 import CartItem from "../components/CartItem";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCollectionUser } from "../hooks/useCollectionUser";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 import emptyCart from "../img/emptycart.jpg";
+
+import { ProductState } from "../types/myTypes";
+import { UserTypes } from "../types/myTypes";
 
 const Cart = () => {
 	const [subtotal, setSubtotal] = useState(0);
@@ -21,10 +26,22 @@ const Cart = () => {
 	const [total, setTotal] = useState(0);
 
 	const { localCart } = useProductContext();
+	const { user } = useAuthContext();
 
 	const navigate = useNavigate();
 
+	console.log(localCart);
+
+	//fix me
 	const handleChange = (value: any) => setDeliveryFee(value);
+
+	// const { documents, error } = useCollectionUser("users", [
+	// 	"online",
+	// 	"==",
+	// 	true,
+	// ]);
+
+	// documents && console.log(documents);
 
 	useEffect(() => {
 		const sum = localCart.reduce(
@@ -51,12 +68,19 @@ const Cart = () => {
 			<Container>
 				<Row>
 					<Col xs={12} lg={8}>
+						{/* {((user && !documents) || (user && documents!.length === 0)) && (
+							<Container>
+								<h4>Your Cart is Empty</h4>
+								<img className="img-fluid" src={emptyCart} alt="empty cart" />
+							</Container>
+						)} */}
 						{localCart.length === 0 && (
 							<Container>
 								<h4>Your Cart is Empty</h4>
 								<img className="img-fluid" src={emptyCart} alt="empty cart" />
 							</Container>
 						)}
+						{/* {user && <CartItem items={documents} />} */}
 						<CartItem items={localCart} />
 					</Col>
 

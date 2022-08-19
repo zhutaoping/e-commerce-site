@@ -9,3 +9,8 @@ export interface ProductState {
 	count?: number;
 	addedCount?: number;
 }
+
+export interface UserTypes {
+	online: boolean;
+	items: ProductState[];
+}
