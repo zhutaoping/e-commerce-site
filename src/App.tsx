@@ -14,7 +14,6 @@ import Jewelry from "./pages/Jewelry";
 import Electronics from "./pages/Electronics";
 
 import ScrollToTop from "./components/ScrollToTop";
-import { Children } from "react";
 
 function App() {
 	const { user } = useAuthContext();
@@ -23,7 +22,7 @@ function App() {
 		<div className="App">
 			<BrowserRouter>
 				<Navbar />
-				{/* <ScrollToTop /> */}
+				<ScrollToTop />
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={user ? <Home /> : <Login />} />

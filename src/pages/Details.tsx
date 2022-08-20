@@ -44,10 +44,6 @@ const Details = () => {
 		setQuasiCount(1);
 	};
 
-	useEffect(() => {
-		window.scrollTo(0, 0);
-	}, []);
-
 	return (
 		<div>
 			{/* <ScrollToTop /> */}
