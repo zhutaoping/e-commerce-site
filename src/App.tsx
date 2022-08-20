@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 
 import Home from "./pages/Home";
@@ -33,6 +33,7 @@ function App() {
 					<Route path="/women" element={<Women />} />
 					<Route path="/jewelry" element={<Jewelry />} />
 					<Route path="/electronics" element={<Electronics />} />
+					<Route path="*" element={<Navigate replace to="/" />} />
 				</Routes>
 				<Footer />
 			</BrowserRouter>
