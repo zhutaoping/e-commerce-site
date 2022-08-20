@@ -90,7 +90,7 @@ const Cart = () => {
 										Express: $9.99
 									</ToggleButton>
 								</ToggleButtonGroup>
-								<p className="text-muted pb-4 dashed-border">
+								<p className="fs-6 text-muted pb-4 dashed-border">
 									Delivery date:{" "}
 									{new Date(new Date().setDate(new Date().getDate() + 7))
 										.toISOString()
