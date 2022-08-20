@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useRef, useReducer } from "react";
-import { ProductState } from "../types/myTypes";
+import { ProductTypes } from "../types/myTypes";
 
 import { db, auth } from "../firebase/config";
 import { doc, updateDoc, arrayUnion, deleteField } from "firebase/firestore";
@@ -10,13 +10,13 @@ type Props = {
 };
 
 type CartAction =
-	| { type: "INIT"; payload: ProductState[] }
-	| { type: "ADD"; payload: ProductState }
-	| { type: "INCREASE"; payload: ProductState }
-	| { type: "DECREASE"; payload: ProductState }
+	| { type: "INIT"; payload: ProductTypes[] }
+	| { type: "ADD"; payload: ProductTypes }
+	| { type: "INCREASE"; payload: ProductTypes }
+	| { type: "DECREASE"; payload: ProductTypes }
 	| { type: "DELETE"; payload: string };
 
-const localCartReducer = (localCart: ProductState[], action: CartAction) => {
+const localCartReducer = (localCart: ProductTypes[], action: CartAction) => {
 	const { type, payload } = action;
 	switch (type) {
 		case "INIT":
@@ -63,7 +63,7 @@ const localCartReducer = (localCart: ProductState[], action: CartAction) => {
 	}
 };
 
-const addDocCart = async (item: ProductState) => {
+const addDocCart = async (item: ProductTypes) => {
 	const userRef = doc(db, "users", auth.currentUser!.uid);
 
 	await updateDoc(userRef, {
@@ -71,7 +71,7 @@ const addDocCart = async (item: ProductState) => {
 	});
 };
 
-const updateDocCart = async (items: ProductState[]) => {
+const updateDocCart = async (items: ProductTypes[]) => {
 	let uid: string = "";
 	if (auth.currentUser) {
 		uid = auth.currentUser.uid;
@@ -88,7 +88,7 @@ const updateDocCart = async (items: ProductState[]) => {
 };
 
 type Context = {
-	localCart: ProductState[];
+	localCart: ProductTypes[];
 	dispatch: React.Dispatch<CartAction>;
 };
 
@@ -107,10 +107,11 @@ export const ProductContextProvider = ({ children }: Props) => {
 	useEffect(() => {
 		if (user) return;
 
+		console.log("localStorage, getItem");
 		const currLocalCart = localStorage.getItem("localCart");
 
 		if (currLocalCart) {
-			const arr: ProductState[] = JSON.parse(currLocalCart!);
+			const arr: ProductTypes[] = JSON.parse(currLocalCart!);
 			dispatch({ type: "INIT", payload: arr });
 		} else {
 			console.log("empty localCart");

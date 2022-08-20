@@ -9,13 +9,13 @@ import {
 	DocumentData,
 	Query,
 } from "firebase/firestore";
-import { ProductState } from "../types/myTypes";
+import { ProductTypes } from "../types/myTypes";
 
 export const useCollection = (
 	c: string,
 	_q?: [string, WhereFilterOp, string]
 ) => {
-	const [documents, setDocuments] = useState<ProductState[] | null>(null);
+	const [documents, setDocuments] = useState<ProductTypes[] | null>(null);
 	const [error, setError] = useState<ReactNode>();
 
 	const q = useRef(_q).current;

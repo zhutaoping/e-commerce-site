@@ -1,6 +1,6 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import { ProductState } from "../types/myTypes";
+import { ProductTypes } from "../types/myTypes";
 import { useState } from "react";
 import { useProductContext } from "../hooks/useProductContext";
 
@@ -10,7 +10,7 @@ const Details = () => {
 	const [quasiCount, setQuasiCount] = useState(1);
 
 	const location = useLocation();
-	const state = location.state as ProductState;
+	const state = location.state as ProductTypes;
 
 	const { localCart, dispatch } = useProductContext();
 

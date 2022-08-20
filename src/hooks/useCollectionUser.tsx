@@ -1,50 +1,31 @@
-import { useState, useEffect, ReactNode, useRef } from "react";
-import { ProductState, UserTypes } from "../types/myTypes";
+import { useState, useEffect, ReactNode } from "react";
+import { ProductTypes, UserTypes } from "../types/myTypes";
 
-import { db } from "../firebase/config";
-import {
-	collection,
-	onSnapshot,
-	query,
-	where,
-	Query,
-	DocumentData,
-	WhereFilterOp,
-} from "firebase/firestore";
+import { db, auth } from "../firebase/config";
+import { doc, getDoc } from "firebase/firestore";
 
-export const useCollectionUser = (
-	c: string,
-	_q?: [string, WhereFilterOp, boolean]
-) => {
-	const [documents, setDocuments] = useState<ProductState[] | null>(null);
+export const useCollectionUser = (c: string, _q?: string) => {
+	const [documents, setDocuments] = useState<ProductTypes[] | null>(null);
 	const [error, setError] = useState<ReactNode>();
 
-	const q = useRef(_q).current;
-
 	useEffect(() => {
-		let ref: Query<DocumentData> = collection(db, c);
+		const getData = async () => {
+			if (auth.currentUser) {
+				const docRef = doc(db, `users/${_q}`);
+				const docSnap = await getDoc(docRef);
 
-		if (q) {
-			ref = query(ref, where(...q));
-		}
-
-		const unsub = onSnapshot(
-			ref,
-			(snapshot) => {
-				const results = snapshot.docs.map((doc) => ({
-					...(doc.data() as UserTypes),
-				}));
-				const temp = results[0]?.items as ProductState[];
-				setDocuments(temp);
-				setError(null);
-			},
-			(err) => {
-				setError("err.code");
+				if (docSnap.exists()) {
+					const results = docSnap.data() as UserTypes;
+					setDocuments(results.items);
+				} else {
+					// doc.data() will be undefined in this case
+					console.log("No such document!");
+				}
 			}
-		);
+		};
 
-		return () => unsub();
-	}, [c]);
+		getData();
+	}, [c, _q]);
 
 	return { documents, error };
 };

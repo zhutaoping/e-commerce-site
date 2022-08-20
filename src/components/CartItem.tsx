@@ -4,11 +4,11 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import { FaTrash } from "react-icons/fa";
 
-import { ProductState } from "../types/myTypes";
+import { ProductTypes } from "../types/myTypes";
 import { useProductContext } from "../hooks/useProductContext";
 
 type Props = {
-	items: ProductState[] | null;
+	items: ProductTypes[] | null;
 };
 
 const CartItem = ({ items }: Props) => {
@@ -16,7 +16,7 @@ const CartItem = ({ items }: Props) => {
 
 	const navigate = useNavigate();
 
-	const handleIncrease = (item: ProductState) => {
+	const handleIncrease = (item: ProductTypes) => {
 		// console.log("cartItem, handleIncrease");
 		dispatch({
 			type: "INCREASE",
@@ -24,7 +24,7 @@ const CartItem = ({ items }: Props) => {
 		});
 	};
 
-	const handleDecrease = (item: ProductState) => {
+	const handleDecrease = (item: ProductTypes) => {
 		// console.log("cartItem, handleDecrease");
 		if (item.count! === 1) {
 			handleDelete(item.id);

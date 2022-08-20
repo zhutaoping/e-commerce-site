@@ -1,4 +1,4 @@
-export interface ProductState {
+export interface ProductTypes {
 	id: string;
 	title?: string;
 	shortTitle?: string;
@@ -12,5 +12,5 @@ export interface ProductState {
 
 export interface UserTypes {
 	online: boolean;
-	items: ProductState[];
+	items: ProductTypes[];
 }

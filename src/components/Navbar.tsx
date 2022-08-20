@@ -17,9 +17,11 @@ const NavbarBS = () => {
 
 	const { user } = useAuthContext();
 
+	const userId = auth.currentUser ? auth.currentUser.uid : "";
+
 	const { localCart, dispatch } = useProductContext();
 
-	const { documents } = useCollectionUser("users", ["online", "==", true]);
+	const { documents } = useCollectionUser("users", userId);
 
 	useEffect(() => {
 		if (documents) {

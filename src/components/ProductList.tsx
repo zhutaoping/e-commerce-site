@@ -2,11 +2,11 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import { BsCartPlus } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 
-import { ProductState } from "../types/myTypes";
+import { ProductTypes } from "../types/myTypes";
 import { useProductContext } from "../hooks/useProductContext";
 
 type Props = {
-	products: ProductState[];
+	products: ProductTypes[];
 };
 
 const ProductList = ({ products }: Props) => {
@@ -14,7 +14,7 @@ const ProductList = ({ products }: Props) => {
 
 	const { localCart, dispatch } = useProductContext();
 
-	const handleLocalCart = (product: ProductState) => {
+	const handleLocalCart = (product: ProductTypes) => {
 		if (localCart && localCart.some((p) => p.id === product.id)) {
 			dispatch({ type: "INCREASE", payload: { ...product, addedCount: 1 } });
 		} else {

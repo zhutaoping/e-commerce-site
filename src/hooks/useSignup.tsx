@@ -6,7 +6,6 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { db } from "../firebase/config";
 import { setDoc, doc } from "firebase/firestore";
 
-
 export const useSignup = () => {
 	const [isPending, setIsPending] = useState(false);
 	const [error, setError] = useState(null);
