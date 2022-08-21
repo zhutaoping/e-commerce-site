@@ -52,7 +52,7 @@ const Cart = () => {
 			</Container>
 			<Container>
 				<Row>
-					<Col xs={12} lg={8}>
+					<Col xs={12} lg={8} className="mb-lg-5">
 						{localCart.length === 0 && (
 							<Container>
 								<h4>Your Cart is Empty</h4>

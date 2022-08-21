@@ -52,7 +52,7 @@ const CartItem = ({ items }: Props) => {
 			{items &&
 				items.map((item) => (
 					<Container key={item.id}>
-						<Row className=" border-bottom mb-5">
+						<Row className=" border-bottom mb-4">
 							<Col className="mb-4" xs={4}>
 								<img
 									role="button"
@@ -96,7 +96,7 @@ const CartItem = ({ items }: Props) => {
 										<span className="ms-2">Save</span>
 									</div> */}
 									<div
-										className="click-down-button d-flex align-items-center"
+										className="click-down-button d-flex align-items-center mb-4"
 										onClick={() => handleDelete(item.id)}
 									>
 										<FaTrash size={20} color="gray" />

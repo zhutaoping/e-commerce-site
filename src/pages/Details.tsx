@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
 
@@ -6,8 +6,6 @@ import { ProductTypes } from "../types/myTypes";
 import { useProductContext } from "../hooks/useProductContext";
 
 import { BsCartPlus } from "react-icons/bs";
-
-import ScrollToTop from "../components/ScrollToTop";
 
 const Details = () => {
 	const [quasiCount, setQuasiCount] = useState(1);
@@ -46,7 +44,6 @@ const Details = () => {
 
 	return (
 		<div>
-			{/* <ScrollToTop /> */}
 			<Container className="my-5">
 				<Row className="gap-5 p-sm-0">
 					<Col className="me-5 my-auto" sm={12} xl={6}>

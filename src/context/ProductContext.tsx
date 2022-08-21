@@ -23,7 +23,6 @@ const localCartReducer = (localCart: ProductTypes[], action: CartAction) => {
 			return [...payload];
 
 		case "ADD":
-			console.log("ADD");
 			if (payload.addedCount) {
 				payload.count = payload.addedCount;
 			}
@@ -33,8 +32,6 @@ const localCartReducer = (localCart: ProductTypes[], action: CartAction) => {
 			return [...localCart, payload];
 
 		case "INCREASE":
-			console.log("INCREASE");
-
 			let loCountIncre: number = 0;
 			const tempIncre = localCart.map((lo) => {
 				if (lo.id === payload.id) {
@@ -111,7 +108,6 @@ export const ProductContextProvider = ({ children }: Props) => {
 	useEffect(() => {
 		if (user) return;
 
-		console.log("localStorage, getItem");
 		const currLocalCart = localStorage.getItem("localCart");
 
 		if (currLocalCart) {
@@ -121,7 +117,7 @@ export const ProductContextProvider = ({ children }: Props) => {
 			console.log("empty localCart");
 			return;
 		}
-	}, []);
+	}, [user]);
 
 	useEffect(() => {
 		if (initRender.current) {

@@ -21,7 +21,7 @@ const Footer = () => {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setShow(true);
-		}, 2000);
+		}, 1000);
 
 		return () => {
 			setShow(false);

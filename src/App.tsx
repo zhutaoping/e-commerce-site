@@ -1,10 +1,4 @@
-import {
-	BrowserRouter,
-	Routes,
-	Route,
-	Navigate,
-	useLocation,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 
 import Home from "./pages/Home";
@@ -21,26 +15,7 @@ import Electronics from "./pages/Electronics";
 
 import ScrollToTop from "./components/ScrollToTop";
 
-import { useState, useEffect } from "react";
-
 function App() {
-	// const [show, setShow] = useState(false);
-
-	// const location = useLocation();
-
-	// useEffect(() => {
-	// 	const timer = setTimeout(() => {
-	// 		setShow(true);
-	// 		console.log("Initial timeout!");
-	// 	}, 1000);
-
-	// 	return () => {
-	// 		setShow(false);
-	// 		clearTimeout(timer);
-	// 	};
-	// }, [location.pathname]);
-	// console.log(show);
-
 	const { user } = useAuthContext();
 
 	return (
