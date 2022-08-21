@@ -88,3 +88,12 @@ a {
 .myPureWhite {
 	background-color: #f8f9fa;
 }
+
+.fade-in-appear {
+	opacity: 0;
+}
+
+.fade-in-appear-active {
+	opacity: 1;
+	transition: opacity 500ms ease-in;
+}
