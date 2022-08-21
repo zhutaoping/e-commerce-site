@@ -1,3 +1,5 @@
+@import "~bootstrap/scss/mixins";
+
 * {
 	margin: 0;
 	padding: 0;
@@ -89,11 +91,12 @@ a {
 	background-color: #f8f9fa;
 }
 
-.fade-in-appear {
-	opacity: 0;
+.title {
+	font-size: calc(1rem + 0.5vw);
 }
 
-.fade-in-appear-active {
-	opacity: 1;
-	transition: opacity 500ms ease-in;
+@media (min-width: 1200px) {
+	.title {
+		font-size: 1.5rem;
+	}
 }

@@ -72,10 +72,10 @@ const CartItem = ({ items }: Props) => {
 								xs={8}
 								className="d-flex flex-column justify-content-around mb-4"
 							>
-								<Container className="pe-0  d-flex justify-content-between">
-									<h6 className="mb-0 me-3">
+								<Container className="pe-0 d-flex justify-content-between">
+									<p className="title mb-0 me-3">
 										{item.shortTitle ? item.shortTitle : item.title}
-									</h6>
+									</p>
 									<span className="fs-5 ">${item.price}</span>
 								</Container>
 								<Container className="d-flex align-items-baseline justify-content-between pe-0">
