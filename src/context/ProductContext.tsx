@@ -23,6 +23,7 @@ const localCartReducer = (localCart: ProductTypes[], action: CartAction) => {
 			return [...payload];
 
 		case "ADD":
+			console.log("ADD");
 			if (payload.addedCount) {
 				payload.count = payload.addedCount;
 			}
@@ -32,6 +33,8 @@ const localCartReducer = (localCart: ProductTypes[], action: CartAction) => {
 			return [...localCart, payload];
 
 		case "INCREASE":
+			console.log("INCREASE");
+
 			let loCountIncre: number = 0;
 			const tempIncre = localCart.map((lo) => {
 				if (lo.id === payload.id) {
@@ -64,7 +67,8 @@ const localCartReducer = (localCart: ProductTypes[], action: CartAction) => {
 };
 
 const addDocCart = async (item: ProductTypes) => {
-	const userRef = doc(db, "users", auth.currentUser!.uid);
+	const uid = auth.currentUser ? auth.currentUser.uid : "";
+	const userRef = doc(db, "users", uid);
 
 	await updateDoc(userRef, {
 		items: arrayUnion(item),
@@ -77,7 +81,7 @@ const updateDocCart = async (items: ProductTypes[]) => {
 		uid = auth.currentUser.uid;
 	}
 
-	const userRef = doc(db, "users", uid);
+	const userRef = doc(db, `users/${uid}`);
 	await updateDoc(userRef, {
 		items: deleteField(),
 	});
@@ -87,10 +91,10 @@ const updateDocCart = async (items: ProductTypes[]) => {
 	});
 };
 
-type Context = {
+interface Context {
 	localCart: ProductTypes[];
 	dispatch: React.Dispatch<CartAction>;
-};
+}
 
 export const ProductContext = createContext<Context>({
 	localCart: [],

@@ -49,7 +49,7 @@ const Login = () => {
 				)}
 				{isPending && (
 					<Button variant="primary" type="submit" disabled>
-						loading...
+						Loading...
 					</Button>
 				)}
 				{error && <p className="error">{error}</p>}
