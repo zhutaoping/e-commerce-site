@@ -113,11 +113,8 @@ export const ProductContextProvider = ({ children }: Props) => {
 		if (currLocalCart) {
 			const arr: ProductTypes[] = JSON.parse(currLocalCart!);
 			dispatch({ type: "INIT", payload: arr });
-		} else {
-			console.log("empty localCart");
-			return;
 		}
-	}, [user]);
+	}, []);
 
 	useEffect(() => {
 		if (initRender.current) {

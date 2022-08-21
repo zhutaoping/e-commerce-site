@@ -14,7 +14,7 @@
 
 # 連結
 
-- Live Demo: [https://ecommercesite-3693e.web.app/jewelry]
+- Live Demo: [https://ecommercesite-3693e.web.app/]
 
 # 打造工具
 

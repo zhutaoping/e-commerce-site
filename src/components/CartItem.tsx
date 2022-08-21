@@ -68,8 +68,11 @@ const CartItem = ({ items }: Props) => {
 								/>
 							</Col>
 
-							<Col xs={8} className="d-flex flex-column justify-content-around">
-								<Container className="pe-0  d-flex justify-content-between align-items-baseline">
+							<Col
+								xs={8}
+								className="d-flex flex-column justify-content-around mb-4"
+							>
+								<Container className="pe-0  d-flex justify-content-between">
 									<h6 className="mb-0 me-3">
 										{item.shortTitle ? item.shortTitle : item.title}
 									</h6>
@@ -96,7 +99,7 @@ const CartItem = ({ items }: Props) => {
 										<span className="ms-2">Save</span>
 									</div> */}
 									<div
-										className="click-down-button d-flex align-items-center mb-4"
+										className="click-down-button d-flex align-items-center"
 										onClick={() => handleDelete(item.id)}
 									>
 										<FaTrash size={20} color="gray" />
