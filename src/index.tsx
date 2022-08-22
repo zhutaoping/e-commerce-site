@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./custom.scss";
 import "./index.scss";
 import App from "./App";
+import "bootstrap/scss/bootstrap.scss";
 
 import { ProductContextProvider } from "./context/ProductContext";
 import { AuthContextProvider } from "./context/AuthContext";

@@ -32,7 +32,9 @@
 
 # 持續加強
 
-雖然已使用過一小段時間，但 TypeScript 仍三不五時讓我卡住。很多方面都還在習慣養成階段，尚未深入理解。對 React Context API 和 useReducer 已有多次的實戰練習，下一步就是學習 Redux。另外，也要開始學習 Next.js。
+雖然已使用過一小段時間，但 TypeScript 仍三不五時讓我卡住。很多方面都還在習慣養成階段，尚未深入理解, 例如泛型等概念。
+
+對 React Context API 和 useReducer 已有多次的實戰練習，下一步就是學習 Redux。另外，也要開始學習 Next.js。
 
 # 作者
 

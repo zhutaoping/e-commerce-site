@@ -18,7 +18,7 @@ const Login = () => {
 
 	return (
 		<Container
-			className="myPureWhite rounded signup-wrapper my-sm-5 border p-5"
+			className="myBg rounded signup-wrapper my-sm-5 border p-5"
 			fluid="sm"
 		>
 			<Form onSubmit={handleSubmit}>

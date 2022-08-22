@@ -17,7 +17,6 @@ const CartItem = ({ items }: Props) => {
 	const navigate = useNavigate();
 
 	const handleIncrease = (item: ProductTypes) => {
-		// console.log("cartItem, handleIncrease");
 		dispatch({
 			type: "INCREASE",
 			payload: { ...item, addedCount: 1 },
@@ -25,7 +24,6 @@ const CartItem = ({ items }: Props) => {
 	};
 
 	const handleDecrease = (item: ProductTypes) => {
-		// console.log("cartItem, handleDecrease");
 		if (item.count! === 1) {
 			handleDelete(item.id);
 		}
@@ -53,7 +51,7 @@ const CartItem = ({ items }: Props) => {
 				items.map((item) => (
 					<Container key={item.id}>
 						<Row className=" border-bottom mb-4">
-							<Col className="mb-4" xs={4}>
+							<Col className="d-flex align-items-center mb-4" xs={4}>
 								<img
 									role="button"
 									title="Details"

@@ -1,10 +1,4 @@
-import {
-	BrowserRouter,
-	Routes,
-	Route,
-	Navigate,
-	useLocation,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 
 import Home from "./pages/Home";
@@ -18,9 +12,9 @@ import Men from "./pages/Men";
 import Women from "./pages/Women";
 import Jewelry from "./pages/Jewelry";
 import Electronics from "./pages/Electronics";
-import { FadeInWhenVisible } from "./helpers/FadeInWhenVisible";
 
-import ScrollToTop from "./components/ScrollToTop";
+import { FadeInWhenVisible } from "./helpers/FadeInWhenVisible";
+import ScrollToTop from "./helpers/ScrollToTop";
 
 function App() {
 	const { user } = useAuthContext();

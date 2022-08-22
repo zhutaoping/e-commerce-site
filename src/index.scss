@@ -87,16 +87,16 @@ a {
 	}
 }
 
-.myPureWhite {
+.myBg {
 	background-color: #f8f9fa;
 }
 
 .title {
 	font-size: calc(1rem + 0.5vw);
-}
 
-@media (min-width: 1200px) {
-	.title {
-		font-size: 1.5rem;
+	@media (min-width: 1200px) {
+		.title {
+			font-size: 1.5rem;
+		}
 	}
 }
