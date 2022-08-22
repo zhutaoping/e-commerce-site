@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
+import { useProductContext } from "./useProductContext";
 
 import {
 	createUserWithEmailAndPassword,
@@ -14,6 +15,7 @@ export const useSignup = () => {
 	const [error, setError] = useState(null);
 
 	const { dispatch } = useAuthContext();
+	const { dispatch: dispatchProduct } = useProductContext();
 
 	const signup = async (
 		email: string,
@@ -42,6 +44,7 @@ export const useSignup = () => {
 				displayName: displayName,
 			});
 
+			dispatchProduct({ type: "INIT", payload: [] });
 			dispatch!({ type: "LOGIN", payload: res.user });
 
 			setIsPending(false);
