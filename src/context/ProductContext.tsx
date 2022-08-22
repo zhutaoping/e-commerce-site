@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer } from "react";
+import React, { createContext, useEffect, useReducer, useRef } from "react";
 import { ProductTypes } from "../types/myTypes";
 
 import { db, auth } from "../firebase/config";
@@ -103,6 +103,8 @@ export const ProductContextProvider = ({ children }: Props) => {
 
 	const { user } = useAuthContext();
 
+	const initRender = useRef(true);
+
 	useEffect(() => {
 		if (user) return;
 
@@ -115,6 +117,10 @@ export const ProductContextProvider = ({ children }: Props) => {
 	}, [user]);
 
 	useEffect(() => {
+		if (initRender.current) {
+			initRender.current = false;
+			return;
+		}
 		if (user) return;
 
 		const json = JSON.stringify(localCart);

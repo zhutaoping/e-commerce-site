@@ -13,15 +13,14 @@ export const useLogin = () => {
 	const { dispatch } = useAuthContext();
 
 	const login = (email: string, password: string) => {
-		setError(null);
 		setIsPending(true);
+		setError(null);
 
 		signInWithEmailAndPassword(auth, email, password)
 			.then((res) => {
 				updateDoc(doc(db, "users", res.user.uid), {
 					online: true,
 				});
-
 				dispatch!({ type: "LOGIN", payload: res.user });
 				setIsPending(false);
 			})

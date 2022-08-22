@@ -6,6 +6,7 @@ import { doc, getDoc } from "firebase/firestore";
 
 export const useCollectionUser = (c: string, _q?: string) => {
 	const [documents, setDocuments] = useState<ProductTypes[] | null>(null);
+
 	const [error, setError] = useState<ReactNode>();
 
 	useEffect(() => {

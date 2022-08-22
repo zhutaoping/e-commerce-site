@@ -17,9 +17,9 @@ const NavbarBS = () => {
 
 	const { user } = useAuthContext();
 
-	const userId = auth.currentUser ? auth.currentUser.uid : "";
-
 	const { localCart, dispatch } = useProductContext();
+
+	const userId = auth.currentUser ? auth.currentUser.uid : "";
 
 	const { documents } = useCollectionUser("users", userId);
 
@@ -103,11 +103,12 @@ const NavbarBS = () => {
 
 				{user && (
 					<span className="d-none d-sm-flex fs-5 me-2 me-md-4">
-						hi, {auth.currentUser && auth.currentUser.displayName}
+						hi, {user.displayName}
 					</span>
 				)}
 
 				{user && (
+					
 					<Nav.Link
 						onClick={() => {
 							setExpanded(false);
