@@ -20,7 +20,6 @@ export const useCollectionUser = (c: string, _q?: string) => {
 					setDocuments(results.items);
 				} else {
 					// doc.data() will be undefined in this case
-					setDocuments(null);
 					console.log("No such document!");
 				}
 			}
