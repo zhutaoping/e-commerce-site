@@ -21,10 +21,6 @@ html {
 	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
 }
 
-a {
-	text-decoration: none;
-}
-
 .error {
 	color: red;
 	background: pink;
@@ -69,16 +65,6 @@ a {
 
 .dashed-border {
 	border-bottom: 1px dashed;
-}
-
-.my-wrapper {
-	@media (min-width: 768px) {
-		max-width: 50%;
-	}
-
-	@media (min-width: 992px) {
-		max-width: 100%;
-	}
 }
 
 .signup-wrapper {

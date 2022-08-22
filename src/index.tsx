@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.scss";
 import App from "./App";
 import "bootstrap/scss/bootstrap.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { ProductContextProvider } from "./context/ProductContext";
 import { AuthContextProvider } from "./context/AuthContext";

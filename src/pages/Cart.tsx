@@ -124,9 +124,10 @@ const Cart = () => {
 									<h4 className="">${total}</h4>
 								</div>
 							</Container>
-							<Container className="my-wrapper d-flex flex-column gap-2 mb-5">
+
+							<Container className="d-flex flex-column  gap-2 mb-5">
 								<Button
-									className="click-down-button shadow-sm"
+									className="mx-md-5 mx-lg-0 click-down-button shadow-sm"
 									size="lg"
 									type="button"
 									variant="primary"
@@ -134,7 +135,7 @@ const Cart = () => {
 									Proceed to checkout
 								</Button>
 								<Button
-									className="click-down-button shadow-sm"
+									className="mx-md-5 mx-lg-0 click-down-button shadow-sm"
 									size="lg"
 									type="button"
 									variant="outline-secondary"
