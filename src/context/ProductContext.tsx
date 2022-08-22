@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useRef, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import { ProductTypes } from "../types/myTypes";
 
 import { db, auth } from "../firebase/config";
@@ -101,8 +101,6 @@ export const ProductContext = createContext<Context>({
 export const ProductContextProvider = ({ children }: Props) => {
 	const [localCart, dispatch] = useReducer(localCartReducer, []);
 
-	const initRender = useRef(true);
-
 	const { user } = useAuthContext();
 
 	useEffect(() => {
@@ -111,19 +109,17 @@ export const ProductContextProvider = ({ children }: Props) => {
 		const currLocalCart = localStorage.getItem("localCart");
 
 		if (currLocalCart) {
-			const arr: ProductTypes[] = JSON.parse(currLocalCart!);
+			const arr: ProductTypes[] = JSON.parse(currLocalCart);
 			dispatch({ type: "INIT", payload: arr });
 		}
-	}, []);
+	}, [user]);
 
 	useEffect(() => {
-		if (initRender.current) {
-			initRender.current = false;
-			return;
-		}
+		if (user) return;
+
 		const json = JSON.stringify(localCart);
 		localStorage.setItem("localCart", json);
-	}, [localCart]);
+	}, [localCart, user]);
 
 	const value = { localCart, dispatch };
 
