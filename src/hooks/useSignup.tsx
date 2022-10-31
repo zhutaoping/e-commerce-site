@@ -5,9 +5,9 @@ import { useProductContext } from "./useProductContext";
 import {
 	createUserWithEmailAndPassword,
 	updateProfile,
-	getAuth,
+	// getAuth,
 } from "firebase/auth";
-import { db } from "../firebase/config";
+import { db, auth } from "../firebase/config";
 import { setDoc, doc } from "firebase/firestore";
 
 export const useSignup = () => {
@@ -26,7 +26,7 @@ export const useSignup = () => {
 		setError(null);
 
 		try {
-			const auth = getAuth();
+			// const auth = getAuth();
 
 			const res = await createUserWithEmailAndPassword(auth, email, password);
 
