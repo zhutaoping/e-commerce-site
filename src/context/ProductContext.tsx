@@ -1,135 +1,150 @@
-import React, { createContext, useEffect, useReducer, useRef } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+} from "react";
 import { ProductTypes } from "../types/myTypes";
-
 import { db, auth } from "../firebase/config";
 import { doc, updateDoc, arrayUnion, deleteField } from "firebase/firestore";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useAuthContext } from "./AuthContext";
 
-type Props = {
-	children: React.ReactNode;
-};
+interface Props {
+  children: React.ReactNode;
+}
 
-type CartAction =
-	| { type: "INIT"; payload: ProductTypes[] }
-	| { type: "ADD"; payload: ProductTypes }
-	| { type: "INCREASE"; payload: ProductTypes }
-	| { type: "DECREASE"; payload: ProductTypes }
-	| { type: "DELETE"; payload: string };
+type Action =
+  | { type: "INIT"; payload: ProductTypes[] }
+  | { type: "ADD"; payload: ProductTypes }
+  | { type: "INCREASE"; payload: ProductTypes }
+  | { type: "DECREASE"; payload: ProductTypes }
+  | { type: "DELETE"; payload: string };
 
-const localCartReducer = (localCart: ProductTypes[], action: CartAction) => {
-	const { type, payload } = action;
-	switch (type) {
-		case "INIT":
-			return [...payload];
+const localCartReducer = (localCart: ProductTypes[], action: Action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case "INIT":
+      return [...payload];
 
-		case "ADD":
-			if (payload.addedCount) {
-				payload.count = payload.addedCount;
-			}
-			payload.addedCount = 0;
+    case "ADD":
+      if (payload.addedCount) {
+        payload.count = payload.addedCount;
+      }
+      payload.addedCount = 0;
 
-			auth.currentUser && addDocCart(payload);
-			return [...localCart, payload];
+      auth.currentUser && addDocCart(payload);
+      return [...localCart, payload];
 
-		case "INCREASE":
-			let loCountIncre: number = 0;
-			const tempIncre = localCart.map((lo) => {
-				if (lo.id === payload.id) {
-					loCountIncre = lo.count! + payload.addedCount!;
-					return { ...lo, count: loCountIncre };
-				} else return lo;
-			});
-			auth.currentUser && updateDocCart(tempIncre);
-			return [...tempIncre];
+    case "INCREASE":
+      let loCountIncre: number = 0;
+      const tempIncre = localCart.map((lo) => {
+        if (lo.id === payload.id) {
+          loCountIncre = lo.count! + payload.addedCount!;
+          return { ...lo, count: loCountIncre };
+        } else return lo;
+      });
+      auth.currentUser && updateDocCart(tempIncre);
+      return [...tempIncre];
 
-		case "DECREASE":
-			let loCountDecre: number = 0;
-			const tempDecre = localCart.map((lo) => {
-				if (lo.id === payload.id) {
-					loCountDecre = lo.count! - payload.addedCount!;
-					return { ...lo, count: loCountDecre };
-				} else return lo;
-			});
-			auth.currentUser && updateDocCart(tempDecre);
-			return [...tempDecre];
+    case "DECREASE":
+      let loCountDecre: number = 0;
+      const tempDecre = localCart.map((lo) => {
+        if (lo.id === payload.id) {
+          loCountDecre = lo.count! - payload.addedCount!;
+          return { ...lo, count: loCountDecre };
+        } else return lo;
+      });
+      auth.currentUser && updateDocCart(tempDecre);
+      return [...tempDecre];
 
-		case "DELETE":
-			const tempDelete = localCart.filter((lo) => lo.id !== payload);
-			auth.currentUser && updateDocCart(tempDelete);
-			return [...tempDelete];
+    case "DELETE":
+      const tempDelete = localCart.filter((lo) => lo.id !== payload);
+      auth.currentUser && updateDocCart(tempDelete);
+      return [...tempDelete];
 
-		default:
-			return localCart;
-	}
+    default:
+      return localCart;
+  }
 };
 
 const addDocCart = async (item: ProductTypes) => {
-	const uid = auth.currentUser ? auth.currentUser.uid : "";
-	const userRef = doc(db, "users", uid);
+  const uid = auth.currentUser ? auth.currentUser.uid : "";
+  const userRef = doc(db, "users", uid);
 
-	await updateDoc(userRef, {
-		items: arrayUnion(item),
-	});
+  await updateDoc(userRef, {
+    items: arrayUnion(item),
+  });
 };
 
 const updateDocCart = async (items: ProductTypes[]) => {
-	let uid: string = "";
-	if (auth.currentUser) {
-		uid = auth.currentUser.uid;
-	}
+  let uid: string = "";
+  if (auth.currentUser) {
+    uid = auth.currentUser.uid;
+  }
 
-	const userRef = doc(db, `users/${uid}`);
-	await updateDoc(userRef, {
-		items: deleteField(),
-	});
+  const userRef = doc(db, `users/${uid}`);
+  await updateDoc(userRef, {
+    items: deleteField(),
+  });
 
-	await updateDoc(userRef, {
-		items: arrayUnion(...items),
-	});
+  await updateDoc(userRef, {
+    items: arrayUnion(...items),
+  });
 };
 
 interface Context {
-	localCart: ProductTypes[];
-	dispatch: React.Dispatch<CartAction>;
+  localCart: ProductTypes[];
+  dispatch: React.Dispatch<Action>;
 }
 
 export const ProductContext = createContext<Context>({
-	localCart: [],
-	dispatch: () => null,
+  localCart: [],
+  dispatch: () => null,
 });
 
 export const ProductContextProvider = ({ children }: Props) => {
-	const [localCart, dispatch] = useReducer(localCartReducer, []);
+  const [localCart, dispatch] = useReducer(localCartReducer, []);
 
-	const { user } = useAuthContext();
+  const { user } = useAuthContext();
 
-	const initRender = useRef(true);
+  const initRender = useRef(true);
 
-	useEffect(() => {
-		if (user) return;
+  useEffect(() => {
+    if (user) return;
 
-		const currLocalCart = localStorage.getItem("localCart");
+    const currLocalCart = localStorage.getItem("localCart");
 
-		if (currLocalCart) {
-			const arr: ProductTypes[] = JSON.parse(currLocalCart);
-			dispatch({ type: "INIT", payload: arr });
-		}
-	}, [user]);
+    if (currLocalCart) {
+      const arr: ProductTypes[] = JSON.parse(currLocalCart);
+      dispatch({ type: "INIT", payload: arr });
+    }
+  }, [user]);
 
-	useEffect(() => {
-		if (initRender.current) {
-			initRender.current = false;
-			return;
-		}
-		if (user) return;
+  useEffect(() => {
+    if (initRender.current) {
+      initRender.current = false;
+      return;
+    }
+    if (user) return;
 
-		const json = JSON.stringify(localCart);
-		localStorage.setItem("localCart", json);
-	}, [localCart, user]);
+    const json = JSON.stringify(localCart);
+    localStorage.setItem("localCart", json);
+  }, [localCart, user]);
 
-	const value = { localCart, dispatch };
+  const value = { localCart, dispatch };
 
-	return (
-		<ProductContext.Provider value={value}>{children}</ProductContext.Provider>
-	);
+  return (
+    <ProductContext.Provider value={value}>{children}</ProductContext.Provider>
+  );
+};
+
+export const useProductContext = () => {
+  const context = useContext(ProductContext);
+
+  if (!context) {
+    throw Error("useAuthContext must be used inside an AuthContextProvider");
+  }
+
+  return context;
 };

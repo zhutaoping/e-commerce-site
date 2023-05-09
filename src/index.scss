@@ -1,88 +1,100 @@
 @import "~bootstrap/scss/mixins";
 
+@mixin pad {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+@mixin mobile {
+  @media (min-width: 375px) {
+    @content;
+  }
+}
+
 * {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 html {
-	box-sizing: border-box;
-	scroll-behavior: smooth;
-	overflow-y: scroll;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
 }
 
 *,
 *::before,
 *::after {
-	box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 .navbar-shadow {
-	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
 }
 
 .error {
-	color: red;
-	background: pink;
-	border: 1px solid red;
-	border-radius: 4px;
-	padding: 8px;
-	margin: 10px 0;
+  color: red;
+  background: pink;
+  border: 1px solid red;
+  border-radius: 4px;
+  padding: 8px;
+  margin: 10px 0;
 }
 
 .nav-login {
-	& span {
-		color: rgb(0 0 0 / 55%);
-	}
+  & span {
+    color: rgb(0 0 0 / 55%);
+  }
 
-	& span:hover {
-		color: rgb(0 0 0 / 70%);
-	}
+  & span:hover {
+    color: rgb(0 0 0 / 70%);
+  }
 }
 
 .footer-nav {
-	& span:hover {
-		color: rgba(255, 255, 255, 0.7);
-	}
+  & span:hover {
+    color: rgba(255, 255, 255, 0.7);
+  }
 }
 
 .social-icons {
-	& a {
-		color: white;
-	}
-	& a:hover {
-		color: rgba(255, 255, 255, 0.7);
-	}
+  & a {
+    color: white;
+  }
+  & a:hover {
+    color: rgba(255, 255, 255, 0.7);
+  }
 }
 
 .click-down-button {
-	user-select: none;
+  user-select: none;
 
-	&:active {
-		transform: translateY(1px);
-	}
+  &:active {
+    transform: translateY(1px);
+  }
 }
 
 .dashed-border {
-	border-bottom: 1px dashed;
+  border-bottom: 1px dashed;
 }
 
-.signup-wrapper {
-	@media (min-width: 768px) {
-		max-width: 440px;
-	}
+.signup,
+.login {
+  @include pad {
+    max-width: 440px;
+  }
 }
 
 .myBg {
-	background-color: #f8f9fa;
+  background-color: #f8f9fa;
 }
 
 .title {
-	font-size: calc(1rem + 0.5vw);
+  font-size: calc(1rem + 0.5vw);
 
-	@media (min-width: 1200px) {
-		.title {
-			font-size: 1.5rem;
-		}
-	}
+  @media (min-width: 1200px) {
+    .title {
+      font-size: 1.5rem;
+    }
+  }
 }
