@@ -69,7 +69,7 @@ const CartItem = ({ items }: Props) => {
                 className="d-flex flex-column justify-content-around mb-4"
               >
                 <Container className="pe-0 d-flex justify-content-between">
-                  <p className="title mb-0 me-3 fs-6">
+                  <p className="title mb-0 me-3">
                     {item.shortTitle ? item.shortTitle : item.title}
                   </p>
                   <span className="fs-6 fw-bold">${item.price}</span>
