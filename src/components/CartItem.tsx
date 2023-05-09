@@ -77,14 +77,17 @@ const CartItem = ({ items }: Props) => {
                 <Container className="d-flex align-items-baseline justify-content-between pe-0">
                   <span
                     role="button"
-                    className="click-down-button text-warning fw-bold mb-0 ps-md-4 fs-5"
+                    className="click-down-button text-warning fw-bold mb-0 ps-md-4 fs-4"
                     onClick={() => handleDecrease(item)}
                   >
                     &minus;
                   </span>
-                  <h4 className="mb-0 user-select-none fs-6">{item.count}</h4>
+                  <span className="mb-0 user-select-none fs-5">
+                    {item.count}
+                  </span>
                   <span
-                    className="click-down-button text-warning fw-bold mb-0 fs-5"
+                    role="button"
+                    className="click-down-button text-warning fw-bold mb-0 fs-4"
                     onClick={() => handleIncrease(item)}
                   >
                     &#43;
