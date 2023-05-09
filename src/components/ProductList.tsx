@@ -11,10 +11,10 @@ interface Props {
 const ProductList = ({ products }: Props) => {
   const navigate = useNavigate();
 
-  const { localCart, dispatch } = useProductContext();
+  const { state, dispatch } = useProductContext();
 
   const handleLocalCart = (product: ProductTypes) => {
-    if (localCart && localCart.some((p) => p.id === product.id)) {
+    if (state && state.some((p) => p.id === product.id)) {
       dispatch({ type: "INCREASE", payload: { ...product, addedCount: 1 } });
     } else {
       dispatch({ type: "ADD", payload: { ...product, addedCount: 1 } });

@@ -9,9 +9,9 @@ const Details = () => {
   const [quasiCount, setQuasiCount] = useState(1);
 
   const location = useLocation();
-  const state = location.state as ProductTypes;
+  const locationState = location.state as ProductTypes;
 
-  const { localCart, dispatch } = useProductContext();
+  const { state, dispatch } = useProductContext();
 
   const handleIncrease = () => {
     setQuasiCount((prev) => prev + 1);
@@ -23,18 +23,18 @@ const Details = () => {
   };
 
   const handleAddToCart = () => {
-    if (!localCart.some((lo) => lo.id === state.id)) {
+    if (!state.some((lo) => lo.id === locationState.id)) {
       dispatch({
         type: "ADD",
         payload: {
-          ...state,
+          ...locationState,
           addedCount: quasiCount,
         },
       });
     } else {
       dispatch({
         type: "INCREASE",
-        payload: { ...state, addedCount: quasiCount },
+        payload: { ...locationState, addedCount: quasiCount },
       });
     }
     setQuasiCount(1);
@@ -47,20 +47,20 @@ const Details = () => {
           <Col className="me-5 my-auto" sm={12} xl={6}>
             <img
               className="img-fluid d-flex mx-auto align-items-center text-center"
-              src={state.image}
+              src={locationState.image}
               alt="product details"
             />
           </Col>
 
           <Col className="px-4">
             <h5 className="mt-xl-5 bold">
-              <strong>{state.title}</strong>
+              <strong>{locationState.title}</strong>
             </h5>
             <p className="lead my-4 mb-xl-5 mt-xl-5 text-muted fs-6">
-              {state.description}
+              {locationState.description}
             </p>
 
-            <p className="fw-bold mb-4 mb-xl-5 fs-6">${state.price}</p>
+            <p className="fw-bold mb-4 mb-xl-5 fs-6">${locationState.price}</p>
 
             <div className="d-md-flex gap-5">
               <Container className="d-flex align-items-center justify-content-between">

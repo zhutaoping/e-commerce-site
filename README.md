@@ -2,6 +2,10 @@
 
 網頁商品全來自 Fake Store API。因為課程正好剛教完 Firebase 入門, 於是手動將所有 20 項商品全搬進 Firebase，練習前端與後端的連結和溝通。
 
+# 連結 / Links
+
+- Live Demo: [https://e-commerce-site-nu.vercel.app/]
+
 # 挑戰 / User Stories
 
 網頁應用有下述功能:
@@ -11,10 +15,6 @@
 - [x] 使用者可註冊，登入後的購物車資料將存入 Firebase，供下次登入後使用
 - [x] 商品可進行分類，在各別網頁中瀏覽
 - [x] 使用 Bootstrap, 實現響應式網頁設計
-
-# 連結 / Links
-
-- Live Demo: [https://e-commerce-site-nu.vercel.app/]
 
 # 打造工具 / Technologies
 

@@ -21,7 +21,7 @@ const Cart = () => {
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
 
-  const { localCart } = useProductContext();
+  const { state } = useProductContext();
 
   const navigate = useNavigate();
 
@@ -29,12 +29,12 @@ const Cart = () => {
     setDeliveryFee(value);
 
   useEffect(() => {
-    const sum = localCart.reduce(
+    const sum = state.reduce(
       (prev, curr) => prev + curr.price! * curr.count!,
       0
     );
     setSubtotal(+sum.toFixed(2));
-  }, [localCart]);
+  }, [state]);
 
   useEffect(() => {
     setTax(Number((subtotal * 0.172).toFixed(2)));
@@ -53,7 +53,7 @@ const Cart = () => {
       <Container>
         <Row>
           <Col xs={12} lg={8} className="mb-lg-5">
-            {localCart.length === 0 && (
+            {state.length === 0 && (
               <Container className="d-flex flex-column align-items-center ">
                 <h6>Your Cart is Empty</h6>
                 <img
@@ -64,7 +64,7 @@ const Cart = () => {
                 />
               </Container>
             )}
-            <CartItem items={localCart} />
+            <CartItem items={state} />
           </Col>
 
           <Col>

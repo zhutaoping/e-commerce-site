@@ -16,7 +16,7 @@ const NavbarBS = () => {
 
   const { user } = useAuthContext();
 
-  const { localCart, dispatch } = useProductContext();
+  const { state, dispatch } = useProductContext();
 
   const userId = auth.currentUser ? auth.currentUser.uid : "";
 
@@ -28,7 +28,7 @@ const NavbarBS = () => {
     }
   }, [documents, dispatch]);
 
-  const totalLocalCartCount = localCart.reduce(
+  const totalLocalCartCount = state.reduce(
     (prev, curr) => prev + curr.count!,
     0
   );
@@ -127,7 +127,7 @@ const NavbarBS = () => {
               bg="danger"
               className="position-absolute top-0 start-100 translate-middle rounded-pill bg-danger"
             >
-              {localCart ? totalLocalCartCount : 0}
+              {state ? totalLocalCartCount : 0}
               <span className="visually-hidden">shopping cart items</span>
             </Badge>
           </div>

@@ -1,19 +1,17 @@
 import React, {
+  ReactNode,
   createContext,
   useContext,
   useEffect,
   useReducer,
-  useRef,
 } from "react";
+import { auth } from "../firebase/config";
+import addDocCart from "../hooks/useAddDocCart";
+import updateDocCart from "../hooks/useUpdateDocCart";
 import { ProductTypes } from "../types/myTypes";
-import { db, auth } from "../firebase/config";
-import { doc, updateDoc, arrayUnion, deleteField } from "firebase/firestore";
 import { useAuthContext } from "./AuthContext";
 
-interface Props {
-  children: React.ReactNode;
-}
-
+//* Reducer
 type Action =
   | { type: "INIT"; payload: ProductTypes[] }
   | { type: "ADD"; payload: ProductTypes }
@@ -21,7 +19,12 @@ type Action =
   | { type: "DECREASE"; payload: ProductTypes }
   | { type: "DELETE"; payload: string };
 
-const localCartReducer = (localCart: ProductTypes[], action: Action) => {
+const updateLocalStorage = (state: ProductTypes[]) => {
+  const json = JSON.stringify(state);
+  localStorage.setItem("state", json);
+};
+
+const stateReducer = (state: ProductTypes[], action: Action) => {
   const { type, payload } = action;
   switch (type) {
     case "INIT":
@@ -34,105 +37,76 @@ const localCartReducer = (localCart: ProductTypes[], action: Action) => {
       payload.addedCount = 0;
 
       auth.currentUser && addDocCart(payload);
-      return [...localCart, payload];
+
+      const newState = [...state, payload];
+      updateLocalStorage(newState);
+      return newState;
 
     case "INCREASE":
-      let loCountIncre: number = 0;
-      const tempIncre = localCart.map((lo) => {
+      let localCountIncre: number = 0;
+      const increState = state.map((lo) => {
         if (lo.id === payload.id) {
-          loCountIncre = lo.count! + payload.addedCount!;
-          return { ...lo, count: loCountIncre };
+          localCountIncre = lo.count! + payload.addedCount!;
+          return { ...lo, count: localCountIncre };
         } else return lo;
       });
-      auth.currentUser && updateDocCart(tempIncre);
-      return [...tempIncre];
+      auth.currentUser && updateDocCart(increState);
+      updateLocalStorage(increState);
+      return [...increState];
 
     case "DECREASE":
-      let loCountDecre: number = 0;
-      const tempDecre = localCart.map((lo) => {
+      let localCountDecre: number = 0;
+      const decreState = state.map((lo) => {
         if (lo.id === payload.id) {
-          loCountDecre = lo.count! - payload.addedCount!;
-          return { ...lo, count: loCountDecre };
+          localCountDecre = lo.count! - payload.addedCount!;
+          return { ...lo, count: localCountDecre };
         } else return lo;
       });
-      auth.currentUser && updateDocCart(tempDecre);
-      return [...tempDecre];
+      auth.currentUser && updateDocCart(decreState);
+      updateLocalStorage(decreState);
+      return [...decreState];
 
     case "DELETE":
-      const tempDelete = localCart.filter((lo) => lo.id !== payload);
+      const tempDelete = state.filter((lo) => lo.id !== payload);
       auth.currentUser && updateDocCart(tempDelete);
+      updateLocalStorage(tempDelete);
       return [...tempDelete];
 
     default:
-      return localCart;
+      return state;
   }
 };
 
-const addDocCart = async (item: ProductTypes) => {
-  const uid = auth.currentUser ? auth.currentUser.uid : "";
-  const userRef = doc(db, "users", uid);
-
-  await updateDoc(userRef, {
-    items: arrayUnion(item),
-  });
-};
-
-const updateDocCart = async (items: ProductTypes[]) => {
-  let uid: string = "";
-  if (auth.currentUser) {
-    uid = auth.currentUser.uid;
-  }
-
-  const userRef = doc(db, `users/${uid}`);
-  await updateDoc(userRef, {
-    items: deleteField(),
-  });
-
-  await updateDoc(userRef, {
-    items: arrayUnion(...items),
-  });
-};
-
-interface Context {
-  localCart: ProductTypes[];
+//* Context
+interface ProductContextType {
+  state: ProductTypes[];
   dispatch: React.Dispatch<Action>;
 }
 
-export const ProductContext = createContext<Context>({
-  localCart: [],
+export const ProductContext = createContext<ProductContextType>({
+  state: [],
   dispatch: () => null,
 });
 
-export const ProductContextProvider = ({ children }: Props) => {
-  const [localCart, dispatch] = useReducer(localCartReducer, []);
-
+export const ProductContextProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
+  const [state, dispatch] = useReducer(stateReducer, []);
   const { user } = useAuthContext();
-
-  const initRender = useRef(true);
 
   useEffect(() => {
     if (user) return;
 
-    const currLocalCart = localStorage.getItem("localCart");
-
-    if (currLocalCart) {
-      const arr: ProductTypes[] = JSON.parse(currLocalCart);
+    const currState = localStorage.getItem("state");
+    if (currState) {
+      const arr: ProductTypes[] = JSON.parse(currState);
       dispatch({ type: "INIT", payload: arr });
     }
   }, [user]);
 
-  useEffect(() => {
-    if (initRender.current) {
-      initRender.current = false;
-      return;
-    }
-    if (user) return;
-
-    const json = JSON.stringify(localCart);
-    localStorage.setItem("localCart", json);
-  }, [localCart, user]);
-
-  const value = { localCart, dispatch };
+  const value = { state, dispatch };
 
   return (
     <ProductContext.Provider value={value}>{children}</ProductContext.Provider>

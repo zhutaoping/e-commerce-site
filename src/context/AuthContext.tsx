@@ -14,7 +14,6 @@ type StateType = {
   authIsReady: boolean;
 };
 
-// discriminated union type
 type Action =
   | { type: "LOGIN"; payload: User }
   | { type: "LOGOUT"; payload: null }
