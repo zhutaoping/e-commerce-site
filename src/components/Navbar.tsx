@@ -44,7 +44,7 @@ const NavbarBS = () => {
     >
       <Container>
         <Navbar.Brand as={Link} to="/">
-          <span className="display-6 me-lg-5">Mock</span>
+          <h1 className="display-6 me-lg-5">Mock</h1>
         </Navbar.Brand>
 
         <Navbar.Toggle
@@ -101,7 +101,7 @@ const NavbarBS = () => {
         )}
 
         {user && (
-          <span className="d-none d-sm-flex fs-5 me-2 me-md-4">
+          <span className="d-sm-flex fs-6 me-2 me-md-4">
             hi, {user.displayName}
           </span>
         )}
@@ -116,7 +116,7 @@ const NavbarBS = () => {
             as={Link}
             to="/signup"
           >
-            <span className="fs-5">Logout</span>
+            <span className="fs-6">Logout</span>
           </Nav.Link>
         )}
 
