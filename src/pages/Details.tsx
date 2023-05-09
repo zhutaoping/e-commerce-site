@@ -71,8 +71,9 @@ const Details = () => {
                 >
                   &minus;
                 </span>
-                <span className="mb-0 user-select-none fs-6">{quasiCount}</span>
+                <span className="mb-0 user-select-none fs-5">{quasiCount}</span>
                 <span
+                  role="button"
                   className="click-down-button text-warning fw-bold mb-0 fs-4"
                   onClick={handleIncrease}
                 >
