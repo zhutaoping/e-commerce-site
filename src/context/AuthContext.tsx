@@ -1,61 +1,78 @@
-import { createContext, useReducer, useEffect } from "react";
-
+import {
+  createContext,
+  useReducer,
+  useEffect,
+  useContext,
+  ReactNode,
+} from "react";
 import { auth } from "../firebase/config";
 import { onAuthStateChanged, User } from "firebase/auth";
 
-interface AuthTypes {
-	user: User | null;
-	authIsReady: boolean;
-	dispatch?: React.Dispatch<Action>;
-}
+//* Reducer
+type StateType = {
+  user: User | null;
+  authIsReady: boolean;
+};
 
-export const AuthContext = createContext<AuthTypes>({
-	user: null,
-	authIsReady: false,
-	dispatch: () => null,
+// discriminated union type
+type Action =
+  | { type: "LOGIN"; payload: User }
+  | { type: "LOGOUT"; payload: null }
+  | { type: "AUTH_IS_READY"; payload: User | null };
+
+export const authReducer = (state: StateType, action: Action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case "LOGIN":
+      return { ...state, user: payload };
+    case "LOGOUT":
+      return { ...state, user: null };
+    case "AUTH_IS_READY":
+      return { user: payload, authIsReady: true };
+    default:
+      return state;
+  }
+};
+
+//* Context
+type AuthContextType = {
+  user: User | null;
+  authIsReady: boolean;
+  dispatch?: React.Dispatch<Action>;
+};
+
+export const AuthContext = createContext<AuthContextType>({
+  user: null,
+  authIsReady: false,
+  dispatch: () => null,
 });
 
-type Action =
-	| { type: "LOGIN"; payload: User }
-	| { type: "LOGOUT"; payload: null }
-	| { type: "AUTH_IS_READY"; payload: User | null };
+export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
+  const [state, dispatch] = useReducer(authReducer, {
+    user: null,
+    authIsReady: false,
+  });
 
-export const authReducer = (state: AuthTypes, action: Action): AuthTypes => {
-	const { type, payload } = action;
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      dispatch({ type: "AUTH_IS_READY", payload: user });
+    });
+  }, []);
 
-	switch (type) {
-		case "LOGIN":
-			return { ...state, user: payload };
-		case "LOGOUT":
-			return { ...state, user: null };
-		case "AUTH_IS_READY":
-			return { user: payload, authIsReady: true };
-		default:
-			return state;
-	}
+  return (
+    <AuthContext.Provider value={{ ...state, dispatch }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-type Props = {
-	children: React.ReactNode;
-};
+export const useAuthContext = () => {
+  const context = useContext(AuthContext);
 
-export const AuthContextProvider = ({ children }: Props) => {
-	const [state, dispatch] = useReducer(authReducer, {
-		user: null,
-		authIsReady: false,
-	});
+  if (!context) {
+    throw Error("useAuthContext must be used inside an AuthContextProvider");
+  }
 
-	useEffect(() => {
-		onAuthStateChanged(auth, (user) => {
-			dispatch({ type: "AUTH_IS_READY", payload: user });
-		});
-	}, []);
-
-	// console.log("AuthContext state:", state);
-
-	return (
-		<AuthContext.Provider value={{ ...state, dispatch }}>
-			{children}
-		</AuthContext.Provider>
-	);
+  return context;
 };

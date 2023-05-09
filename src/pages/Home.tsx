@@ -3,16 +3,16 @@ import ProductList from "../components/ProductList";
 import Newsletter from "../components/Newsletter";
 
 const Home = () => {
-	const { documents: products, error } = useCollection("products");
+  const { documents: products, error } = useCollection("products");
 
-	return (
-		<div>
-			<h4 className="p-4 text-center">Collections</h4>
-			{error && <p className="error">{error}</p>}
-			{products && <ProductList products={products} />}
-			<Newsletter />
-		</div>
-	);
+  return (
+    <div>
+      <h5 className="p-4 text-center">Collections</h5>
+      {error && <p className="error">{error}</p>}
+      {products && <ProductList products={products} />}
+      <Newsletter />
+    </div>
+  );
 };
 
 export default Home;
