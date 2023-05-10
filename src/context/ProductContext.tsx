@@ -26,7 +26,6 @@ const updateLocalStorage = (state: ProductTypes[]) => {
 
 const stateReducer = (state: ProductTypes[], action: Action) => {
 	const { type, payload } = action;
-	console.log("🚀 ~ stateReducer ~ payload:", payload);
 
 	switch (type) {
 		case "INIT":

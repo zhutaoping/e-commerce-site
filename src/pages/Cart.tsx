@@ -6,7 +6,7 @@ import {
 	ToggleButton,
 	Button,
 } from "react-bootstrap";
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import CartItem from "../components/CartItem";
@@ -22,9 +22,6 @@ const Cart = () => {
 	const [total, setTotal] = useState(0);
 
 	const { state } = useProductContext();
-	if (state.length !== 0) {
-		console.log("STATE:", state);
-	}
 
 	const navigate = useNavigate();
 
