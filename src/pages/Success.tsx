@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 export default function Success() {
 	useEffect(() => {
-		// Clear the cart
+		// Clear the local cart
 		localStorage.setItem("state", JSON.stringify([]));
 	}, []);
 
