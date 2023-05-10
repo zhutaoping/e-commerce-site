@@ -14,32 +14,34 @@ import Men from "./pages/Men";
 import Women from "./pages/Women";
 import Jewelry from "./pages/Jewelry";
 import Electronics from "./pages/Electronics";
+import Success from "./pages/Success";
 
 function App() {
-  const { user } = useAuthContext();
+	const { user } = useAuthContext();
 
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Navbar />
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={user ? <Home /> : <Login />} />
-          <Route path="/signup" element={user ? <Home /> : <Signup />} />
-          <Route path="/details/:id" element={<Details />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/men" element={<Men />} />
-          <Route path="/women" element={<Women />} />
-          <Route path="/jewelry" element={<Jewelry />} />
-          <Route path="/electronics" element={<Electronics />} />
-          <Route path="*" element={<Navigate replace to="/" />} />
-        </Routes>
-        <FadeInWhenVisible>
-          <Footer />
-        </FadeInWhenVisible>
-      </BrowserRouter>
-    </div>
-  );
+	return (
+		<div className="App">
+			<BrowserRouter>
+				<Navbar />
+				<ScrollToTop />
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/login" element={user ? <Home /> : <Login />} />
+					<Route path="/signup" element={user ? <Home /> : <Signup />} />
+					<Route path="/details/:id" element={<Details />} />
+					<Route path="/cart" element={<Cart />} />
+					<Route path="/men" element={<Men />} />
+					<Route path="/women" element={<Women />} />
+					<Route path="/jewelry" element={<Jewelry />} />
+					<Route path="electronics" element={<Electronics />} />
+					<Route path="success" element={<Success />} />
+					<Route path="*" element={<Navigate replace to="/" />} />
+				</Routes>
+				<FadeInWhenVisible>
+					<Footer />
+				</FadeInWhenVisible>
+			</BrowserRouter>
+		</div>
+	);
 }
 export default App;

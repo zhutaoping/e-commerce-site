@@ -6,9 +6,9 @@ import React, {
 	useReducer,
 } from "react";
 import { auth } from "../firebase/config";
+import { ProductTypes } from "../types/myTypes";
 import addDocCart from "../hooks/useAddDocCart";
 import updateDocCart from "../hooks/useUpdateDocCart";
-import { ProductTypes } from "../types/myTypes";
 import { useAuthContext } from "./AuthContext";
 
 //* Reducer
@@ -26,6 +26,8 @@ const updateLocalStorage = (state: ProductTypes[]) => {
 
 const stateReducer = (state: ProductTypes[], action: Action) => {
 	const { type, payload } = action;
+	console.log("🚀 ~ stateReducer ~ payload:", payload);
+
 	switch (type) {
 		case "INIT":
 			return [...payload];

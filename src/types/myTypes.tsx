@@ -8,6 +8,7 @@ export interface ProductTypes {
 	image?: string;
 	count?: number;
 	addedCount?: number;
+	stripeId?: string;
 }
 
 export interface UserTypes {

@@ -7,8 +7,6 @@ import { doc, getDoc } from "firebase/firestore";
 export const useCollectionUser = (c: string, _q?: string) => {
 	const [documents, setDocuments] = useState<ProductTypes[] | null>(null);
 
-	const [error, setError] = useState<ReactNode>();
-
 	useEffect(() => {
 		const getData = async () => {
 			if (auth.currentUser) {
@@ -27,5 +25,5 @@ export const useCollectionUser = (c: string, _q?: string) => {
 		getData();
 	}, [c, _q]);
 
-	return { documents, error };
+	return { documents };
 };
