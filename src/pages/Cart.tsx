@@ -14,6 +14,11 @@ import CartItem from "../components/CartItem";
 import emptyCart from "../assets/images/empty-cart.jpg";
 import { useProductContext } from "../context/ProductContext";
 
+const URL =
+	process.env.NODE_ENV === "development"
+		? "http://localhost:4000/checkout"
+		: "https://e-comm-stripe-api.onrender.com/checkout";
+
 const Cart = () => {
 	const [subtotal, setSubtotal] = useState(0);
 	const [discount, setDiscount] = useState(0);
@@ -46,7 +51,8 @@ const Cart = () => {
 	}, [tax, discount, subtotal, deliveryFee]);
 
 	async function checkout() {
-		await fetch("https://e-comm-stripe-api.onrender.com/checkout", {
+		console.log("checkout");
+		await fetch(URL, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
