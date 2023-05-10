@@ -9,6 +9,7 @@ const firebaseConfig = {
 	storageBucket: process.env.REACT_APP_STOREBUCKET,
 	messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
 	appId: process.env.REACT_APP_APPID,
+	experimentalForceLongPolling: true,
 };
 // init firebase
 const app = initializeApp(firebaseConfig);
