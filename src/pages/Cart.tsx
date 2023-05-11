@@ -51,7 +51,8 @@ const Cart = () => {
 	}, [tax, discount, subtotal, deliveryFee]);
 
 	async function checkout() {
-		console.log("checkout");
+		console.log("URL", URL);
+
 		await fetch(URL, {
 			method: "POST",
 			headers: {
