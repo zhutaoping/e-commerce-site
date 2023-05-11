@@ -52,7 +52,7 @@ const Cart = () => {
 
 	async function checkout() {
 		console.log("checkout");
-		await fetch("https://e-comm-stripe-api.onrender.com/checkout", {
+		await fetch(URL, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -64,6 +64,7 @@ const Cart = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.url) {
+					console.log("data.url", data.url);
 					window.location.assign(data.url);
 				}
 			});
