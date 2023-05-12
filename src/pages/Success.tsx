@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { deleteField, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
+import { Stack } from "react-bootstrap";
+import { MdOutlineEmail } from "react-icons/md";
 
 export default function Success() {
 	const { user } = useAuthContext();
@@ -14,7 +16,6 @@ export default function Success() {
 	};
 
 	useEffect(() => {
-		console.log("HERRRREE");
 		if (!user) {
 			// Clear the local cart
 			localStorage.setItem("state", JSON.stringify([]));
@@ -22,5 +23,19 @@ export default function Success() {
 		deleteDocCart();
 	}, [user]);
 
-	return <h1>Thank you for your purchase!</h1>;
+	return (
+		<div className="success">
+			<div className="container">
+				<h1>Thank you</h1>
+				<h6 className="">Your order was completed successfully</h6>
+				<div className="email">
+					<MdOutlineEmail size={60} className="icon" />
+					<span>
+						An email receipt including the details about your order has been
+						sent. Please keep it for your records
+					</span>
+				</div>
+			</div>
+		</div>
+	);
 }

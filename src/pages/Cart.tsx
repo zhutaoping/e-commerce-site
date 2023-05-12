@@ -51,8 +51,6 @@ const Cart = () => {
 	}, [tax, discount, subtotal, deliveryFee]);
 
 	async function checkout() {
-		console.log("URL", URL);
-
 		await fetch(URL, {
 			method: "POST",
 			headers: {
@@ -65,7 +63,6 @@ const Cart = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.url) {
-					console.log("data.url", data.url);
 					window.location.assign(data.url);
 				}
 			});
