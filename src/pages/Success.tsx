@@ -29,7 +29,7 @@ export default function Success() {
 				<h1>Thank you</h1>
 				<h6 className="">Your order was completed successfully</h6>
 				<div className="email">
-					<MdOutlineEmail size={60} className="icon" />
+					<MdOutlineEmail size={50} className="icon" />
 					<span>
 						An email receipt including the details about your order has been
 						sent. Please keep it for your records
