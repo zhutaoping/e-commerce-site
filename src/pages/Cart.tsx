@@ -61,6 +61,8 @@ const Cart = () => {
 			body: JSON.stringify({
 				items: state,
 			}),
+			credentials: "include",
+			mode: "cors",
 		})
 			.then((res) => res.json())
 			.then((data) => {
