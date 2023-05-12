@@ -61,7 +61,6 @@ const Cart = () => {
 			body: JSON.stringify({
 				items: state,
 			}),
-			mode: "cors",
 		})
 			.then((res) => res.json())
 			.then((data) => {
