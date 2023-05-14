@@ -15,6 +15,7 @@
 - [x] 使用者可註冊，登入後的購物車資料將存入 Firebase，供下次登入後使用
 - [x] 商品可進行分類，在各別網頁中瀏覽
 - [x] 使用 Bootstrap, 實現響應式網頁設計
+- [x] 建立後端，實現 Stripe checkout 功能
 
 # 打造工具 / Technologies
 
@@ -24,3 +25,6 @@
 - React Router
 - Bootstrap
 - Firebase
+- node.js
+- express
+- stripe
