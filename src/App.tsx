@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useAuthContext } from "./context/AuthContext";
+import { useAuth } from "./auth/AuthContext";
 import { FadeInWhenVisible } from "./helpers/FadeInWhenVisible";
 import ScrollToTop from "./helpers/ScrollToTop";
 
@@ -17,7 +17,7 @@ import Electronics from "./pages/Electronics";
 import Success from "./pages/Success";
 
 function App() {
-	const { user } = useAuthContext();
+	const { user } = useAuth();
 
 	return (
 		<div className="App">

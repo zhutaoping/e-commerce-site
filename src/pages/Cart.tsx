@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import CartItem from "../components/CartItem";
 
 import emptyCart from "../assets/images/empty-cart.jpg";
-import { useProductContext } from "../context/ProductContext";
+import { useProduct } from "../products/ProductContext";
 
 const URL =
 	process.env.NODE_ENV === "development"
@@ -26,7 +26,7 @@ const Cart = () => {
 	const [tax, setTax] = useState(0);
 	const [total, setTotal] = useState(0);
 
-	const { state } = useProductContext();
+	const { state } = useProduct();
 
 	const navigate = useNavigate();
 

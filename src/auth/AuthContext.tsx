@@ -8,18 +8,19 @@ import {
 import { auth } from "../firebase/config";
 import { onAuthStateChanged, User } from "firebase/auth";
 
-//* Reducer
+//* REDUCER
 type StateType = {
 	user: User | null;
 	authIsReady: boolean;
 };
 
+// Discriminated Union
 type Action =
 	| { type: "LOGIN"; payload: User }
 	| { type: "LOGOUT" }
 	| { type: "AUTH_IS_READY"; payload: User | null };
 
-export const authReducer = (state: StateType, action: Action) => {
+const authReducer = (state: StateType, action: Action) => {
 	switch (action.type) {
 		case "LOGIN":
 			return { ...state, user: action.payload };
@@ -32,18 +33,14 @@ export const authReducer = (state: StateType, action: Action) => {
 	}
 };
 
-//* Context
+//* CONTEXT
 type AuthContextType = {
 	user: User | null;
 	authIsReady: boolean;
 	dispatch: React.Dispatch<Action>;
 };
 
-export const AuthContext = createContext<AuthContextType>({
-	user: null,
-	authIsReady: false,
-	dispatch: () => null,
-});
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 	const [state, dispatch] = useReducer(authReducer, {
@@ -64,12 +61,4 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 	);
 };
 
-export const useAuthContext = () => {
-	const context = useContext(AuthContext);
-
-	if (!context) {
-		throw Error("useAuthContext must be used inside an AuthContextProvider");
-	}
-
-	return context;
-};
+export const useAuth = () => useContext(AuthContext);

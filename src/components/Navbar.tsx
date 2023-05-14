@@ -6,17 +6,17 @@ import { BsCart4 } from "react-icons/bs";
 import { auth } from "../firebase/config";
 import { useLogout } from "../hooks/useLogout";
 import { useCollectionUser } from "../hooks/useCollectionUser";
-import { useAuthContext } from "../context/AuthContext";
-import { useProductContext } from "../context/ProductContext";
+import { useAuth } from "../auth/AuthContext";
+import { useProduct } from "../products/ProductContext";
 
 const NavbarBS = () => {
 	const [expanded, setExpanded] = useState(false);
 
 	const { logout } = useLogout();
 
-	const { user } = useAuthContext();
+	const { user } = useAuth();
 
-	const { state, dispatch } = useProductContext();
+	const { state, dispatch } = useProduct();
 
 	const userId = auth.currentUser ? auth.currentUser.uid : "";
 

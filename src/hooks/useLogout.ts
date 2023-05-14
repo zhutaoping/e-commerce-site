@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase/config";
 import { signOut } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
-import { useProductContext } from "../context/ProductContext";
-import { useAuthContext } from "../context/AuthContext";
+import { useProduct } from "../products/ProductContext";
+import { useAuth } from "../auth/AuthContext";
 
 export const useLogout = () => {
-	const { dispatch: dispatchProduct } = useProductContext();
-	const { dispatch } = useAuthContext();
+	const { dispatch: dispatchProduct } = useProduct();
+	const { dispatch } = useAuth();
 	const [isPending, setIsPending] = useState(false);
 	const [error, setError] = useState(null);
 

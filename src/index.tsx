@@ -5,8 +5,8 @@ import App from "./App";
 import "bootstrap/scss/bootstrap.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { ProductContextProvider } from "./context/ProductContext";
-import { AuthContextProvider } from "./context/AuthContext";
+import { ProductContextProvider } from "./products/ProductContext";
+import { AuthContextProvider } from "./auth/AuthContext";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement

@@ -7,11 +7,11 @@ import React, {
 } from "react";
 import { auth } from "../firebase/config";
 import { ProductTypes } from "../types/myTypes";
-import addDocCart from "../hooks/useAddDocCart";
-import updateDocCart from "../hooks/useUpdateDocCart";
-import { useAuthContext } from "./AuthContext";
+import { useAuth } from "../auth/AuthContext";
+import addDocCart from "./useAddDocCart";
+import updateDocCart from "./useUpdateDocCart";
 
-//* Reducer
+//* REDUCER
 type Action =
 	| { type: "INIT"; payload: ProductTypes[] }
 	| { type: "ADD"; payload: ProductTypes }
@@ -19,13 +19,13 @@ type Action =
 	| { type: "DECREASE"; payload: ProductTypes }
 	| { type: "DELETE"; payload: string };
 
-const updateLocalStorage = (state: ProductTypes[]) => {
-	const json = JSON.stringify(state);
-	localStorage.setItem("state", json);
-};
-
 const stateReducer = (state: ProductTypes[], action: Action) => {
 	const { type, payload } = action;
+
+	const updateLocalStorage = (newState: ProductTypes[]) => {
+		const json = JSON.stringify(newState);
+		localStorage.setItem("state", json);
+	};
 
 	switch (type) {
 		case "INIT":
@@ -92,16 +92,15 @@ const stateReducer = (state: ProductTypes[], action: Action) => {
 	}
 };
 
-//* Context
+//* CONTEXT
 interface ProductContextType {
 	state: ProductTypes[];
 	dispatch: React.Dispatch<Action>;
 }
 
-export const ProductContext = createContext<ProductContextType>({
-	state: [],
-	dispatch: () => null,
-});
+export const ProductContext = createContext<ProductContextType>(
+	{} as ProductContextType
+);
 
 export const ProductContextProvider = ({
 	children,
@@ -109,7 +108,7 @@ export const ProductContextProvider = ({
 	children: ReactNode;
 }) => {
 	const [state, dispatch] = useReducer(stateReducer, []);
-	const { user } = useAuthContext();
+	const { user } = useAuth();
 
 	useEffect(() => {
 		if (user) return;
@@ -121,19 +120,11 @@ export const ProductContextProvider = ({
 		}
 	}, [user]);
 
-	const value = { state, dispatch };
-
 	return (
-		<ProductContext.Provider value={value}>{children}</ProductContext.Provider>
+		<ProductContext.Provider value={{ state, dispatch }}>
+			{children}
+		</ProductContext.Provider>
 	);
 };
 
-export const useProductContext = () => {
-	const context = useContext(ProductContext);
-
-	if (!context) {
-		throw Error("useAuthContext must be used inside an AuthContextProvider");
-	}
-
-	return context;
-};
+export const useProduct = () => useContext(ProductContext);

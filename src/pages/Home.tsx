@@ -1,8 +1,6 @@
 import { useCollection } from "../hooks/useCollection";
-import ProductList from "../components/ProductList";
+import ProductList from "../products/ProductList";
 import Newsletter from "../components/Newsletter";
-import { useAuthContext } from "../context/AuthContext";
-import { useEffect } from "react";
 
 const Home = () => {
 	const { documents: products, error } = useCollection("products");

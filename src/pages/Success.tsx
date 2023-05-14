@@ -1,11 +1,11 @@
 import { useCallback, useEffect } from "react";
-import { useAuthContext } from "../context/AuthContext";
+import { useAuth } from "../auth/AuthContext";
 import { deleteField, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { MdOutlineEmail } from "react-icons/md";
 
 export default function Success() {
-	const { user } = useAuthContext();
+	const { user } = useAuth();
 
 	const deleteDocCart = useCallback(async () => {
 		const docRef = doc(db, "users", user!.uid);
