@@ -1,27 +1,26 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { deleteField, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
-import { Stack } from "react-bootstrap";
 import { MdOutlineEmail } from "react-icons/md";
 
 export default function Success() {
 	const { user } = useAuthContext();
 
-	const deleteDocCart = async () => {
+	const deleteDocCart = useCallback(async () => {
 		const docRef = doc(db, "users", user!.uid);
 		await updateDoc(docRef, {
 			items: deleteField(),
 		});
-	};
+	}, [user]);
 
 	useEffect(() => {
 		if (!user) {
-			// Clear the local cart
 			localStorage.setItem("state", JSON.stringify([]));
+			return;
 		}
 		deleteDocCart();
-	}, [user]);
+	}, [deleteDocCart, user]);
 
 	return (
 		<div className="success">

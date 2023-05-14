@@ -29,7 +29,7 @@ export const useLogout = () => {
 			.then(() => {
 				navigate("/");
 				dispatchProduct({ type: "INIT", payload: [] });
-				dispatch!({ type: "LOGOUT", payload: null });
+				dispatch!({ type: "LOGOUT" });
 
 				setIsPending(false);
 				setError(null);
