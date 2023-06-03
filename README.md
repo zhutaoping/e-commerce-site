@@ -4,7 +4,7 @@
 
 # 連結 / Links
 
-- Live Demo: [https://e-commerce-site-nu.vercel.app/]
+- Live Demo: [https://e-commerce-site-hazel.vercel.app]
 
 # 挑戰 / User Stories
 
