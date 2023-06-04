@@ -5,6 +5,7 @@
 # 連結 / Links
 
 - Live Demo: [https://e-commerce-site-hazel.vercel.app]
+- Backend: []https://github.com/zhutaoping/e-comm-stripe-api]
 
 # 挑戰 / User Stories
 
