@@ -25,6 +25,7 @@ const Cart = () => {
 	const [deliveryFee, setDeliveryFee] = useState(0);
 	const [tax, setTax] = useState(0);
 	const [total, setTotal] = useState(0);
+	const [disabledBtn, setDisabledBtn] = useState(false);
 
 	const { state } = useProduct();
 
@@ -51,6 +52,8 @@ const Cart = () => {
 	}, [tax, discount, subtotal, deliveryFee]);
 
 	async function checkout() {
+		setDisabledBtn(true);
+
 		await fetch(URL, {
 			method: "POST",
 			headers: {
@@ -155,11 +158,12 @@ const Cart = () => {
 
 							<Container fluid className="d-flex flex-column gap-2">
 								<Button
-									className="mx-sm-5 mx-lg-0 click-down-button shadow-sm"
+									className={`checkout-btn mx-sm-5 mx-lg-0 click-down-button shadow-sm `}
 									size="sm"
 									type="button"
 									variant="primary"
 									onClick={checkout}
+									disabled={disabledBtn}
 								>
 									Proceed to checkout
 								</Button>
