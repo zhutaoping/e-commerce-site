@@ -25,7 +25,7 @@
 # 打造工具 / Technologies
 
 - HTML / CSS / SCSS
-- JavaScript / TypeScript
+- TypeScript / JavaScript
 - React
 - React Router
 - Bootstrap
