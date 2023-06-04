@@ -1,6 +1,6 @@
 # E-Commerce Mock Site
 
-網頁商品全來自 Fake Store API。因為課程正好剛教完 Firebase 入門, 於是手動將所有 20 項商品全搬進 Firebase，練習前端與後端的連結和溝通。
+網頁商品皆來自 Fake Store API
 
 # 連結 / Links
 
@@ -8,14 +8,18 @@
 
 # 挑戰 / User Stories
 
-網頁應用有下述功能:
-
 - [x] 首頁能看見所有來自後端的商品
-- [x] 不登入也能使用購物車，加入商品的資料會存入 localStorage，以便後續使用
-- [x] 使用者可註冊，登入後的購物車資料將存入 Firebase，供下次登入後使用
-- [x] 商品可進行分類，在各別網頁中瀏覽
-- [x] 使用 Bootstrap, 實現響應式網頁設計
-- [x] 建立後端，實現 Stripe checkout 功能
+- [x] 不登入使用時，購物車資料將存入 localStorage
+- [x] 註冊並登入後，購物車資料將存入 Firebase
+- [x] 各類商品皆有各自的分類網頁
+- [x] 運用 Bootstrap, 實現響應式網頁設計
+- [x] 建立後端，實現 Stripe Checkout 功能
+- [x] Homepage will display all the products
+- [x] Before login, shopping cart will store in localStorage
+- [x] After register and login, shopping cart will store in Firebase
+- [x] Each type of product has its own category page
+- [x] Implement responsive web design using Bootstrap
+- [x] Include payment page using Stripe Checkout
 
 # 打造工具 / Technologies
 
